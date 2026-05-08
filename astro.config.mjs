@@ -10,6 +10,7 @@ export default defineConfig({
 			plugins: [starlightThemeRapide()],
 			customCss: ['./src/styles/theme.css'],
 			components: {
+				Head: './src/components/Head.astro',
 				Header: './src/components/Header.astro',
 				PageTitle: './src/components/PageTitle.astro',
 			},
