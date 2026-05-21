@@ -2,12 +2,41 @@
 ::backdrop,
 :root[data-theme='light'],
 [data-theme='light'] ::backdrop {
-	--docs-theme-color: rgba(220, 38, 38, 0.8);
-	--sl-color-accent: var(--docs-theme-color);
-	--sl-color-accent-high: var(--docs-theme-color);
-	--sl-color-bg-accent: var(--docs-theme-color);
-	--sl-color-text-accent: var(--docs-theme-color);
+	--docs-red: #EB2700;
+	--docs-red-muted: color-mix(in srgb, var(--docs-red) 80%, transparent);
+	--docs-black: #080808;
+	--sl-color-accent-low: color-mix(in srgb, var(--docs-red) 18%, var(--sl-color-black));
+	--sl-color-accent: var(--docs-red);
+	--sl-color-accent-high: var(--docs-red);
+	--sl-color-bg-accent: var(--docs-red);
+	--sl-color-text-accent: var(--docs-red);
 	--sl-content-width: 60rem;
+}
+
+:root:not([data-theme='light']),
+:root:not([data-theme='light']) ::backdrop {
+	--sl-color-white: #f7f7f7;
+	--sl-color-gray-1: #e8e8e8;
+	--sl-color-gray-2: #d0d0d0;
+	--sl-color-gray-3: #a8a8a8;
+	--sl-color-gray-4: #747474;
+	--sl-color-gray-5: #343434;
+	--sl-color-gray-6: #1d1d1d;
+	--sl-color-gray-7: #111111;
+	--sl-color-black: var(--docs-black);
+	--sl-color-bg: var(--docs-black);
+	--sl-color-bg-nav: var(--docs-black);
+	--sl-color-bg-sidebar: var(--docs-black);
+	--sl-color-bg-inline-code: var(--sl-color-gray-6);
+	--sl-color-text: var(--sl-color-gray-2);
+	--sl-color-text-invert: var(--docs-black);
+	--sl-color-hairline-light: var(--sl-color-gray-5);
+	--sl-color-hairline: var(--sl-color-gray-6);
+	--sl-color-hairline-shade: var(--docs-black);
+	--sl-color-backdrop-overlay: color-mix(in srgb, var(--docs-black) 72%, transparent);
+	--sl-rapide-ui-bg-color: var(--docs-black);
+	--sl-rapide-ui-header-bg-color: color-mix(in srgb, var(--docs-black) 88%, transparent);
+	--sl-rapide-ui-border-color: color-mix(in srgb, var(--docs-red) 20%, var(--sl-color-gray-6));
 }
 
 .sidebar-pane a > span:first-child,
@@ -29,7 +58,7 @@
 .sidebar-pane a:is(:hover, :focus-visible) > span:first-child,
 .sidebar-pane summary:is(:hover, :focus-visible) .group-label,
 .sidebar-pane summary:is(:hover, :focus-visible) .group-label .large {
-	color: rgba(220, 38, 38, 1) !important;
+	color: var(--docs-red) !important;
 }
 
 .sidebar-pane a:is(:hover, :focus-visible) > span:first-child,
@@ -60,12 +89,12 @@ starlight-toc a > span {
 }
 
 starlight-toc a:is(:hover, :focus-visible) {
-	color: rgba(220, 38, 38, 0.8);
+	color: var(--docs-red-muted);
 }
 
 starlight-toc a[aria-current='true'],
 starlight-toc a[aria-current='true']:is(:hover, :focus-visible) {
-	color: rgba(220, 38, 38, 1) !important;
+	color: var(--docs-red) !important;
 }
 
 starlight-toc a:is(:hover, :focus-visible) > span {
