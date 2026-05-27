@@ -39,14 +39,14 @@ export default defineConfig({
 			sidebar: [
 				{ label: 'Home', translations: { 'zh-CN': '主页' }, slug: '' },
 				{
+					label: 'Getting Started',
+					translations: { 'zh-CN': '开始使用' },
+					autogenerate: { directory: 'getting_started' },
+				},
+				{
 					label: 'User Guide',
 					translations: { 'zh-CN': '用户指南' },
 					items: [
-						{
-							label: 'Getting Started',
-							translations: { 'zh-CN': '开始使用' },
-							autogenerate: { directory: 'getting_started' },
-						},
 						{
 							label: 'Supported Models',
 							translations: { 'zh-CN': '模型支持列表' },
@@ -57,12 +57,12 @@ export default defineConfig({
 							translations: { 'zh-CN': '热门模型使用' },
 							autogenerate: { directory: 'popular_model_usage' },
 						},
+						{
+							label: 'Advanced Features',
+							translations: { 'zh-CN': '高级功能' },
+							autogenerate: { directory: 'features' },
+						},
 					],
-				},
-				{
-					label: 'Advanced Features',
-					translations: { 'zh-CN': '高级功能' },
-					autogenerate: { directory: 'features' },
 				},
 				{
 					label: 'Developer Guide',

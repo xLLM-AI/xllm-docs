@@ -27,9 +27,17 @@ const isCurrentEntry = (entry) => {
 	return entry.entries.some(isCurrentEntry);
 };
 
+const isHomeHref = (href) => {
+	const url = new URL(href, Astro.url);
+	const normalizedPathname = url.pathname.replace(/\/+$/, '');
+	const currentLocalePath = currentLocale ? `/${currentLocale}` : '';
+
+	return normalizedPathname === '' || normalizedPathname === currentLocalePath;
+};
+
 const navItems = sidebar
 	.map((entry) => ({ label: entry.label, href: getFirstHref(entry), isCurrent: isCurrentEntry(entry) }))
-	.filter((entry) => entry.href);
+	.filter((entry) => entry.href && !isHomeHref(entry.href));
 
 const localeEntries = Object.entries(config.locales ?? {}).map(([code, locale]) => ({
 	code,
