@@ -97,6 +97,15 @@ starlight-toc a[aria-current='true']:is(:hover, :focus-visible) {
 	color: var(--docs-red) !important;
 }
 
+.sl-markdown-content .simple-icon {
+	display: inline-block;
+	flex: 0 0 auto;
+	height: 1em;
+	margin-inline-end: 0.25em;
+	vertical-align: -0.125em;
+	width: 1em;
+}
+
 starlight-toc a:is(:hover, :focus-visible) > span {
 	transform: scale(1.035);
 }

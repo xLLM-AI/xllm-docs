@@ -2,9 +2,13 @@
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 import starlightThemeRapide from 'starlight-theme-rapide';
+import rehypeSimpleIcons from './src/plugins/rehypeSimpleIcons.mjs';
 
 // https://astro.build/config
 export default defineConfig({
+	markdown: {
+		rehypePlugins: [rehypeSimpleIcons],
+	},
 	integrations: [
 		starlight({
 			plugins: [starlightThemeRapide()],
@@ -41,17 +45,23 @@ export default defineConfig({
 				{
 					label: 'Getting Started',
 					translations: { 'zh-CN': '开始使用' },
-					autogenerate: { directory: 'getting_started' },
-				},
-				{
-					label: 'User Guide',
-					translations: { 'zh-CN': '用户指南' },
 					items: [
+						'getting_started/quick_start',
+						'getting_started/launch_xllm',
+						'getting_started/multi_machine',
+						'getting_started/online_service',
+						'getting_started/offline_service',
 						{
 							label: 'Supported Models',
 							translations: { 'zh-CN': '模型支持列表' },
 							slug: 'supported_models',
 						},
+					],
+				},
+				{
+					label: 'User Guide',
+					translations: { 'zh-CN': '用户指南' },
+					items: [
 						{
 							label: 'Popular Model Usage',
 							translations: { 'zh-CN': '热门模型使用' },
