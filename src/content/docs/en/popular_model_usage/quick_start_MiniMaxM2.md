@@ -4,51 +4,51 @@ sidebar:
   order: 3
 ---
 
-+ 源码地址：https://github.com/jd-opensource/xllm
++ Source code: https://github.com/jd-opensource/xllm
 
-+ 国内可用: https://gitcode.com/xLLM-AI/xllm
++ Available in China: https://gitcode.com/xLLM-AI/xllm
 
-+ 权重下载: [modelscope-MiniMax-M2.7](https://www.modelscope.cn/models/MiniMax/MiniMax-M2.7)
-+ 离线反量化权重: [modelscope-Minimax2.7-BF16-xLLM](https://modelscope.cn/models/Eco-Tech/Minimax2.7-BF16-xLLM)
++ Weight download: [modelscope-MiniMax-M2.7](https://www.modelscope.cn/models/MiniMax/MiniMax-M2.7)
++ Offline dequantized weights: [modelscope-Minimax2.7-BF16-xLLM](https://modelscope.cn/models/Eco-Tech/Minimax2.7-BF16-xLLM)
 
-## 0.权重准备
+## 0. Weight Preparation
 
-MiniMax-M2.7 原始权重为 FP8 格式，xLLM 支持以下三种方式加载：
+The original MiniMax-M2.7 weights are in FP8 format. xLLM supports the following three loading methods:
 
-### 方式一：直接加载 FP8 权重（在线反量化）
+### Method 1: Load FP8 weights directly (online dequantization)
 
-直接使用原始 FP8 权重路径，xLLM 会在推理时在线将 FP8 反量化为 BF16 计算，无需额外处理。
+Use the original FP8 weight path directly. xLLM will dequantize FP8 to BF16 during inference, so no additional preprocessing is required.
 
 ```bash
 MODEL_PATH=/path/to/MiniMax-M2.7/
 ```
 
-### 方式二：离线反量化
+### Method 2: Offline dequantization
 
-使用工具脚本预先将 FP8 权重转换为 BF16 格式，避免在线反量化的额外开销：
+Use the tool script to convert FP8 weights to BF16 in advance to avoid the extra overhead of online dequantization:
 
 ```bash
 python tools/dequant_minimax_fp8.py --input-dir /path/to/MiniMax-M2.7/ --output-dir /path/to/MiniMax-M2.7-bf16/
 ```
 
-### 方式三：下载预转换的 BF16 权重
+### Method 3: Download pre-converted BF16 weights
 
-直接下载已反量化好的 BF16 权重：
+Download the dequantized BF16 weights directly:
 
 ```bash
 git clone https://www.modelscope.cn/Eco-Tech/Minimax2.7-BF16-xLLM.git
 ```
 
-## 1.拉取镜像环境
+## 1. Pull the Image Environment
 
-首先下载xLLM提供的镜像：
+First, download the image provided by xLLM:
 
 ```bash
 # A3 arm
 docker pull quay.io/jd_xllm/xllm-ai:xllm-dev-a3-arm-20260429
 ```
 
-然后创建对应的容器
+Then create the corresponding container:
 
 ```bash
 sudo docker run -it --ipc=host -u 0 --privileged --name xllm_minimax --network=host \
@@ -68,9 +68,9 @@ sudo docker run -it --ipc=host -u 0 --privileged --name xllm_minimax --network=h
  quay.io/jd_xllm/xllm-ai:xllm-dev-a3-arm-20260429
 ```
 
-## 2.拉取源码并编译
+## 2. Pull the Source Code and Build
 
-下载官方仓库与模块依赖：
+Download the official repository and module dependencies:
 
 ```bash
 git clone https://github.com/jd-opensource/xllm
@@ -80,36 +80,36 @@ git submodule init
 git submodule update
 ```
 
-下载安装依赖:
+Download and install dependencies:
 
 ```bash
 pip install --upgrade pre-commit
 yum install numactl
 ```
 
-执行编译，在`build/`下生成可执行文件：
+Run the build to generate the executable under `build/`:
 
 ```bash
 python setup.py build
 ```
 
-编译产物路径：`build/xllm/core/server/xllm`
+Build artifact path: `build/xllm/core/server/xllm`
 
-## 3.启动模型
+## 3. Start the Model
 
-### 若机器为重启后初次拉起服务，需先执行以下脚本对device进行初始化
+### If the service is being started for the first time after the machine has rebooted, initialize the devices first
 
-若不执行且npu未初始化可能导致xllm进程拉起失败
+If this is skipped and the NPU has not been initialized, the xLLM process may fail to start.
 
 ```bash
 python -c "import torch_npu
 for i in range(16):torch_npu.npu.set_device(i)"
 ```
 
-### 环境变量
+### Environment Variables
 
 ```bash
-##### 1. 配置依赖路径相关环境变量
+##### 1. Configure dependency path environment variables
 export PYTHON_INCLUDE_PATH="$(python3 -c 'from sysconfig import get_paths; print(get_paths()["include"])')"
 export PYTHON_LIB_PATH="$(python3 -c 'from sysconfig import get_paths; print(get_paths()["include"])')"
 export PYTORCH_NPU_INSTALL_PATH=/usr/local/libtorch_npu/
@@ -123,7 +123,7 @@ export LD_PRELOAD=/usr/lib64/libjemalloc.so.2:$LD_PRELOAD
 source /usr/local/Ascend/ascend-toolkit/set_env.sh
 source /usr/local/Ascend/nnal/atb/set_env.sh
 
-##### 2. 配置日志相关环境变量
+##### 2. Configure log-related environment variables
 rm -rf /root/atb/log/
 rm -rf /root/ascend/log/
 rm -rf core.*
@@ -131,7 +131,7 @@ export ASDOPS_LOG_LEVEL=ERROR
 export ASDOPS_LOG_TO_STDOUT=1
 export ASDOPS_LOG_TO_FILE=1
 
-##### 3. 配置性能、通信相关环境变量
+##### 3. Configure performance and communication-related environment variables
 export PYTORCH_NPU_ALLOC_CONF=expandable_segments:True
 export NPU_MEMORY_FRACTION=0.96
 export ATB_WORKSPACE_MEM_ALLOC_ALG_TYPE=3
@@ -153,19 +153,19 @@ export HCCL_OP_EXPANSION_MODE="AIV"
 export HCCL_IF_BASE_PORT=2864
 ```
 
-## 启动命令 - MiniMax-M2.7（单机 16卡 TP=16）
+## Startup Command - MiniMax-M2.7 (single machine, 16 cards, TP=16)
 
 ```bash
 BATCH_SIZE=256
-#推理最大batch数量
+# Maximum inference batch size
 XLLM_PATH="build/xllm/core/server/xllm"
-#推理入口文件路径（上一步中编译产物）
+# Inference entry binary path, which is the build artifact from the previous step
 MODEL_PATH=/path/to/MiniMax-M2.7/
-#模型路径
+# Model path
 
 MASTER_NODE_ADDR="10.143.3.204:10015"
 LOCAL_HOST="10.143.3.204"
-# Service Port
+# Service port
 START_PORT=18994
 START_DEVICE=0
 LOG_DIR="logs"

@@ -5,6 +5,9 @@ import Search from 'virtual:starlight/components/Search';
 import SiteTitle from 'virtual:starlight/components/SiteTitle';
 import SocialIcons from 'virtual:starlight/components/SocialIcons';
 import ThemeSelect from 'virtual:starlight/components/ThemeSelect';
+import type { StarlightRouteData } from '@astrojs/starlight/route-data';
+
+type SidebarEntry = StarlightRouteData['sidebar'][number];
 
 const { sidebar } = Astro.locals.starlightRoute;
 const currentLocale = Astro.locals.starlightRoute.locale;
@@ -12,7 +15,7 @@ const currentLocale = Astro.locals.starlightRoute.locale;
 const shouldRenderSearch =
 	config.pagefind || config.components.Search !== '@astrojs/starlight/components/Search.astro';
 
-const getFirstHref = (entry) => {
+const getFirstHref = (entry: SidebarEntry): string | undefined => {
 	if (entry.type === 'link') return entry.href;
 
 	for (const child of entry.entries) {
@@ -21,13 +24,13 @@ const getFirstHref = (entry) => {
 	}
 };
 
-const isCurrentEntry = (entry) => {
+const isCurrentEntry = (entry: SidebarEntry): boolean => {
 	if (entry.type === 'link') return entry.isCurrent;
 
 	return entry.entries.some(isCurrentEntry);
 };
 
-const isHomeHref = (href) => {
+const isHomeHref = (href: string): boolean => {
 	const url = new URL(href, Astro.url);
 	const normalizedPathname = url.pathname.replace(/\/+$/, '');
 	const currentLocalePath = currentLocale ? `/${currentLocale}` : '';
@@ -46,7 +49,7 @@ const localeEntries = Object.entries(config.locales ?? {}).map(([code, locale]) 
 	isCurrent: code === currentLocale,
 }));
 
-function getLocalizedPathname(locale) {
+function getLocalizedPathname(locale: string): string {
 	const url = new URL(Astro.url);
 	const pathSegments = url.pathname.split('/');
 	const currentLocaleIndex = pathSegments.findIndex((segment) => segment in (config.locales ?? {}));
