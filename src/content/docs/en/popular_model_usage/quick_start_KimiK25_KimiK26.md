@@ -1,5 +1,5 @@
 ---
-title: "Kimi-K2.5&Kimi-K2.6"
+title: "Kimi-K2.5 / Kimi-K2.6"
 sidebar:
   order: 2
 ---
