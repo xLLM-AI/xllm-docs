@@ -70,11 +70,10 @@ ENABLE_DECODE_RESPONSE_TO_SERVICE=true ./xllm_master_serving --etcd_addr="127.0.
   
     - `etcd_addr`需与`xllm_service`的`etcd_addr`相同
 
-:::caution[注意事项]
-PD分离目前不支持开启prefix cache及chunked prefill功能，需要通过以下参数关闭
+:::tip[Chunked prefill的Prefill实例支持prefix cache]
+使用chunked-prefill PD调度器时，Prefill实例已支持prefix cache。开启后，调度器会先匹配已有prefix cache block，再计算当前chunk budget，避免重复计算已缓存的prompt block。
 ``` shell
---enable_prefix_cache=false
---enable_chunked_prefill=false
+--enable_chunked_prefill=true
+--enable_prefix_cache=true
 ```
-
 :::

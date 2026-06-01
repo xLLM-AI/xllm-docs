@@ -18,6 +18,6 @@ The prefix cache is implemented in xLLM and exposed through gflags parameters to
 ## Performance Impact
 After enabling prefix cache, on the Qwen3-8B model with a TPOT constraint of 50ms, the E2E latency **decreased by 10%**.
 
-:::caution[Note]
-PD separation scheduler is not currently supported.
+:::note
+For disaggregated PD, prefix cache is supported in specific scheduler roles. See [Disaggregated PD](/en/features/disagg_pd/) for the supported configurations.
 :::
