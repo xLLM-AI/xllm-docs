@@ -84,7 +84,7 @@ sudo docker run -it \
 /bin/bash
 ```
 
-### DCU
+### 海光 DCU
 
 下面是我们构建好的开发镜像。
 ```bash
@@ -114,7 +114,7 @@ docker run -it \
 
 ## 编译xllm
 
-如果下载的是release镜像，即tag中带有版本号的镜像，可以跳过此步，因为release镜像自带编译好的xllm二进制文件，路径为`/usr/local/bin/xllm`。
+如果下载的是release镜像，即tag中带有版本号的镜像，可以跳过此步，因为release镜像自带编译好的xllm二进制文件，可以直接调用`xllm`。
 
 下载xllm及依赖
 ```bash
@@ -128,9 +128,13 @@ pre-commit install
 git submodule update --init --recursive
 ```
 
-编译生成的二进制文件位于`/path/to/xllm/build/xllm/core/server/xllm`，在新镜像中，第一次编译xllm耗时较长，因为需要编译vcpkg中的所有依赖，但是后续编译会很快。
+在新镜像中，第一次编译xllm耗时较长，因为需要编译vcpkg中的所有依赖，但是后续编译会很快。
 ```bash
+# 只编译cpp二进制文件
 python setup.py build
+
+# 编译python wheel
+python setup.py bdist_wheel
 ```
 
 ## 启动xllm

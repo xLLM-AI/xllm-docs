@@ -4,7 +4,7 @@ sidebar:
   order: 20
 ---
 ## LLM
-|                          |  NPU  |  MLU  |  ILU  |  DCU  |
+|                          |  NPU  |  MLU  |  ILU  | Hygon DCU |
 | ------------------------ | :---: | :---: | :---: | :---: |
 | DeepSeek-V3/R1/V3.1      |   ✅   |   ✅   |   ❌   |   ❌   |
 | DeepSeek-V3.2            |   ✅   |   ✅   |   ❌   |   ❌   |
@@ -20,7 +20,7 @@ sidebar:
 | GLM-5                    |   ✅   |   ❌   |   ❌   |   ❌   |
 
 ## VLM
-|              |  NPU  |  MLU  |  ILU  |  DCU  |
+|              |  NPU  |  MLU  |  ILU  | Hygon DCU |
 | ------------ | :---: | :---: | :---: | :---: |
 | MiniCPM-V    |   ✅   |   ❌   |   ❌   |   ❌   |
 | MiMo-VL      |   ✅   |   ❌   |   ❌   |   ❌   |
@@ -31,20 +31,19 @@ sidebar:
 | VLM-R1       |   ✅   |   ❌   |   ❌   |   ❌   |
 
 ## Rerank
-|                |  NPU  |  MLU  |  ILU  |  DCU  |
+|                |  NPU  |  MLU  |  ILU  | Hygon DCU |
 | -------------- | :---: | :---: | :---: | :---: |
 | Qwen3-Reranker |   ✅   |   ❌   |   ❌   |   ❌   |
 
 ## DiT
-|      |  NPU  |  MLU  |  ILU  |  DCU  |
+|      |  NPU  |  MLU  |  ILU  | Hygon DCU |
 | ---- | :---: | :---: | :---: | :---: |
 | Flux |   ✅   |   ❌   |   ❌   |   ❌   |
 
 ## Rec
-|     |  NPU  |  MLU  |  ILU  |  DCU  |
+|     |  NPU  |  MLU  |  ILU  | Hygon DCU |
 | --- | :---: | :---: | :---: | :---: |
 | OneRec  |   ✅   |   ❌   |   ❌   |   ❌   |
 | Qwen2   |   ✅   |   ❌   |   ❌   |   ❌   |
 | Qwen2.5 |   ✅   |   ❌   |   ❌   |   ❌   |
 | Qwen3   |   ✅   |   ❌   |   ❌   |   ❌   |
-

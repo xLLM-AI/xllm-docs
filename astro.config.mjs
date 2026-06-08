@@ -59,6 +59,37 @@ export default defineConfig({
 					],
 				},
 				{
+					label: 'Hardware',
+					translations: { 'zh-CN': '硬件' },
+					items: [
+						{
+							label: 'Hardware Platforms',
+							translations: { 'zh-CN': '硬件平台' },
+							slug: 'hardware/overview',
+						},
+						{
+							label: 'NVIDIA GPU',
+							translations: { 'zh-CN': 'NVIDIA GPU' },
+							slug: 'hardware/nvidia_gpu',
+						},
+						{
+							label: 'Ascend NPU',
+							translations: { 'zh-CN': '昇腾 NPU' },
+							slug: 'hardware/ascend_npu',
+						},
+						{
+							label: 'Cambricon MLU',
+							translations: { 'zh-CN': '寒武纪 MLU' },
+							slug: 'hardware/cambricon_mlu',
+						},
+						{
+							label: 'Hygon DCU',
+							translations: { 'zh-CN': '海光 DCU' },
+							slug: 'hardware/dcu',
+						},
+					],
+				},
+				{
 					label: 'User Guide',
 					translations: { 'zh-CN': '用户指南' },
 					items: [

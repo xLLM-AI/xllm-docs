@@ -84,7 +84,7 @@ sudo docker run -it \
 /bin/bash
 ```
 
-### DCU
+### Hygon DCU
 
 Below are our pre-built dev image.
 ```bash
@@ -114,7 +114,7 @@ docker run -it \
 
 ## Build xllm
 
-If you download a release image, i.e., an image with a version number in the tag, you can skip this step because the release image comes with a pre-compiled xllm binary, located at `/usr/local/bin/xllm`.
+If you download a release image, i.e., an image with a version number in the tag, you can skip this step because the release image comes with a pre-compiled xllm binary, and call `xllm` directly.
 
 Download xllm and dependencies:
 ```bash
@@ -128,12 +128,15 @@ pre-commit install
 git submodule update --init --recursive
 ```
 
-The compiled binary file is located at `/path/to/xllm/build/xllm/core/server/xllm`. In a new image, the first compilation of xllm takes a long time because all dependencies in vcpkg need to be compiled, but subsequent compilations will be much faster.
+In a new image, the first compilation of xllm takes a long time because all dependencies in vcpkg need to be compiled, but subsequent compilations will be much faster.
 ```bash
+# Compile cpp binary
 python setup.py build
+
+# Compile python wheel
+python setup.py bdist_wheel
 ```
 
 ## Launch xllm
 Please refer to [How to Launch xllm](/en/getting_started/launch_xllm/).
-
 
