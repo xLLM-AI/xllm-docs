@@ -32,7 +32,7 @@ do
   PORT=$((START_PORT + i))
   DEVICE=$((START_DEVICE + i))
   LOG_FILE="$LOG_DIR/node_$i.log"
-  /path/to/xllm \
+  xllm \
     --model $MODEL_PATH \
     --devices="npu:$DEVICE" \
     --port $PORT \
@@ -75,7 +75,7 @@ do
   PORT=$((START_PORT + i))
   DEVICE=$((START_DEVICE + i))
   LOG_FILE="$LOG_DIR/node_$i.log"
-  /path/to/xllm \
+  xllm \
     --model $MODEL_PATH \
     --devices="cuda:$DEVICE" \
     --port $PORT \
@@ -114,7 +114,7 @@ do
   PORT=$((START_PORT + i))
   DEVICE=$((START_DEVICE + i))
   LOG_FILE="$LOG_DIR/node_$i.log"
-  /path/to/xllm \
+  xllm \
     --model $MODEL_PATH \
     --devices="mlu:$DEVICE" \
     --port $PORT \
@@ -125,7 +125,7 @@ do
 done
 ```
 
-## DCU
+## 海光 DCU
 
 ```bash
 #!/bin/bash
@@ -149,7 +149,7 @@ do
   PORT=$((START_PORT + i))
   DEVICE=$((START_DEVICE + i))
   LOG_FILE="$LOG_DIR/node_$i.log"
-  /path/to/xllm \
+  xllm \
     --model $MODEL_PATH \
     --devices="dcu:$DEVICE" \
     --port $PORT \
