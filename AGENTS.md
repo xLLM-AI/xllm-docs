@@ -26,7 +26,7 @@ All commands are run from the root of the project, from a terminal:
 | `src/content/docs/zh/`                         | Simplified Chinese documentation content               |
 | `src/content/docs/assets/`                     | Shared documentation images and diagrams               |
 | `src/content/docs/*/getting_started/`          | Getting-started guides                                 |
-| `src/content/docs/*/popular_model_usage/`      | Model-specific quick-start guides                      |
+| `src/content/docs/*/cookbook/`                 | Model-specific recipes and quick-start guides          |
 | `src/content/docs/*/features/`                 | User-facing feature documentation                      |
 | `src/content/docs/*/dev_guide/`                | Developer guides                                       |
 | `src/content/docs/*/design/`                   | Design documents                                       |
@@ -49,8 +49,8 @@ All commands are run from the root of the project, from a terminal:
 - Do not add a duplicate Markdown H1 when Starlight already renders the frontmatter `title`.
 - Store shared images in `src/content/docs/assets/` and reference them from both locales when possible.
 - Update the `sidebar` section in `astro.config.mjs` when adding pages or sections that are not covered by existing `autogenerate` entries.
-- Existing autogen sidebar directories are `popular_model_usage`, `features`, `dev_guide`, and `design`.
-- For Popular Model Usage pages, keep the paired files under `src/content/docs/{en,zh}/popular_model_usage/` with the same `quick_start_<ModelName>.md` filename stem and the same `sidebar.order`.
+- Existing autogen sidebar directories are `features`, `dev_guide`, and `design`.
+- For cookbook model pages, keep paired files under matching `src/content/docs/{en,zh}/cookbook/` relative paths and update the manual cookbook sidebar entries in `astro.config.mjs`.
 - Preserve commands, flags, paths, environment variables, image tags, branch names, URLs, and model identifiers exactly unless the requested change is explicitly about those values.
 - Prefer placeholders like `/path/to/<model>/`, `<master-host>`, and `<local-host>` for host-specific examples; do not invent private IPs.
 - Use `:simple-github:` only in normal Markdown text, not inside code blocks, when the GitHub icon token is needed.

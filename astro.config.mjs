@@ -94,11 +94,6 @@ export default defineConfig({
 					translations: { 'zh-CN': '用户指南' },
 					items: [
 						{
-							label: 'Popular Model Usage',
-							translations: { 'zh-CN': '热门模型使用' },
-							autogenerate: { directory: 'popular_model_usage' },
-						},
-						{
 							label: 'Advanced Features',
 							translations: { 'zh-CN': '高级功能' },
 							autogenerate: { directory: 'features' },
@@ -231,8 +226,8 @@ export default defineConfig({
 											slug: 'cookbook/autoregressive_models/kimi/kimi2',
 										},
 										{
-											label: 'Kimi2.5',
-											translations: { 'zh-CN': 'Kimi2.5' },
+											label: 'Kimi-K2.5 / Kimi-K2.6',
+											translations: { 'zh-CN': 'Kimi-K2.5 / Kimi-K2.6' },
 											slug: 'cookbook/autoregressive_models/kimi/kimi2_5',
 										},
 									],
@@ -243,8 +238,8 @@ export default defineConfig({
 									collapsed: true,
 									items: [
 										{
-											label: 'MinMax-M2.7',
-											translations: { 'zh-CN': 'MinMax-M2.7' },
+											label: 'MiniMax-M2.7',
+											translations: { 'zh-CN': 'MiniMax-M2.7' },
 											slug: 'cookbook/autoregressive_models/minmax/minmax_m2_7',
 										},
 									],
