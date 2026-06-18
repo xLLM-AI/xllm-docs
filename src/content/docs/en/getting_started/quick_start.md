@@ -88,7 +88,7 @@ sudo docker run -it \
 
 Below are our pre-built dev image.
 ```bash
-docker pull harbor.sourcefind.cn:5443/dcu/admin/base/custom:xllm-dev-dcu-x86-20260602
+docker pull harbor.sourcefind.cn:5443/dcu/admin/base/custom:xllm-dev-dcu-x86-20260617
 ```
 
 Container startup command:

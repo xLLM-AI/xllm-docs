@@ -88,7 +88,7 @@ sudo docker run -it \
 
 下面是我们构建好的开发镜像。
 ```bash
-docker pull harbor.sourcefind.cn:5443/dcu/admin/base/custom:xllm-dev-dcu-x86-20260602
+docker pull harbor.sourcefind.cn:5443/dcu/admin/base/custom:xllm-dev-dcu-x86-20260617
 ```
 
 容器启动命令如下：

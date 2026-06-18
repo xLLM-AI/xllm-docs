@@ -12,7 +12,7 @@ sidebar:
 拉取海光 DCU 开发镜像：
 
 ```bash
-docker pull harbor.sourcefind.cn:5443/dcu/admin/base/custom:xllm-dev-dcu-x86-20260602
+docker pull harbor.sourcefind.cn:5443/dcu/admin/base/custom:xllm-dev-dcu-x86-20260617
 ```
 
 启动容器：

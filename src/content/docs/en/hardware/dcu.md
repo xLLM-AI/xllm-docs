@@ -12,7 +12,7 @@ Use the Hygon DCU backend when running xLLM on Hygon DCU hardware.
 Pull the Hygon DCU development image:
 
 ```bash
-docker pull harbor.sourcefind.cn:5443/dcu/admin/base/custom:xllm-dev-dcu-x86-20260602
+docker pull harbor.sourcefind.cn:5443/dcu/admin/base/custom:xllm-dev-dcu-x86-20260617
 ```
 
 Start the container:

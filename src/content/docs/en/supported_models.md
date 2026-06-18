@@ -11,7 +11,7 @@ sidebar:
 | DeepSeek-R1-Distill-Qwen |   ✅   |   ❌   |   ❌   |   ❌   |
 | Qwen2/2.5/QwQ            |   ✅   |   ✅   |   ✅   |   ✅   |
 | Qwen3                    |   ✅   |   ✅   |   ✅   |   ✅   |
-| Qwen3 Moe                |   ✅   |   ✅   |   ✅   |   ❌   |
+| Qwen3 Moe                |   ✅   |   ✅   |   ✅   |   ✅   |
 | Kimi-k2                  |   ✅   |   ❌   |   ❌   |   ❌   |
 | Llama2/3                 |   ✅   |   ❌   |   ✅   |   ❌   |
 | GLM4.5                   |   ✅   |   ❌   |   ❌   |   ❌   |
@@ -24,9 +24,9 @@ sidebar:
 | ------------ | :---: | :---: | :---: | :---: |
 | MiniCPM-V    |   ✅   |   ❌   |   ❌   |   ❌   |
 | MiMo-VL      |   ✅   |   ❌   |   ❌   |   ❌   |
-| Qwen2.5-VL   |   ✅   |   ✅   |   ❌   |   ❌   |
-| Qwen3-VL     |   ✅   |   ✅   |   ❌   |   ❌   |
-| Qwen3-VL-MoE |   ✅   |   ✅   |   ❌   |   ❌   |
+| Qwen2.5-VL   |   ✅   |   ✅   |   ❌   |   ✅   |
+| Qwen3-VL     |   ✅   |   ✅   |   ❌   |   ✅   |
+| Qwen3-VL-MoE |   ✅   |   ✅   |   ❌   |   ✅   |
 | GLM-4.6V     |   ✅   |   ❌   |   ❌   |   ❌   |
 | VLM-R1       |   ✅   |   ❌   |   ❌   |   ❌   |
 
