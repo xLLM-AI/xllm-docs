@@ -13,6 +13,7 @@ export default defineConfig({
 		starlight({
 			plugins: [starlightThemeRapide()],
 			customCss: ['./src/styles/theme.css'],
+			lastUpdated: true,
 			components: {
 				Head: './src/components/Head.astro',
 				Header: './src/components/Header.astro',
