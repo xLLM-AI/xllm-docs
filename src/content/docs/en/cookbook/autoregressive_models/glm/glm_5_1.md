@@ -1,8 +1,6 @@
 ---
 title: "GLM-5.1"
-description: "CookBook recipe placeholder for GLM-5.1 autoregressive model inference"
+description: "GLM-5.1 inference recipes are consolidated into the GLM-5 series guide"
 ---
 
-This section will collect GLM-5.1 autoregressive model inference recipes for xLLM.
-
-Content will be added as the recipes are organized.
+GLM-5.1 inference recipes are consolidated into [GLM-5 / GLM-5.1 / GLM-5.2](/en/cookbook/autoregressive_models/glm/glm_5/).

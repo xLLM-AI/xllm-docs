@@ -11,6 +11,6 @@ Content will be added as the recipes are organized.
 
 - [Qwen](/en/cookbook/autoregressive_models/qwen/qwen3_5/)
 - [DeepSeek](/en/cookbook/autoregressive_models/deepseek/deepseek_v3_2/)
-- [GLM](/en/cookbook/autoregressive_models/glm/glm_5_1/)
+- [GLM](/en/cookbook/autoregressive_models/glm/glm_5/)
 - [Kimi](/en/cookbook/autoregressive_models/kimi/kimi2/)
 - [MinMax](/en/cookbook/autoregressive_models/minmax/minmax_m2_7/)

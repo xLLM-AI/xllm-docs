@@ -1,25 +1,34 @@
 ---
-title: "GLM5-W8A8"
+title: "GLM-5 / GLM-5.1 / GLM-5.2"
 sidebar:
   order: 2
 ---
+
 + 源码地址：https://github.com/jd-opensource/xllm
 
 + 国内可用: https://gitcode.com/xLLM-AI/xllm
 
-+ 权重下载: [modelscope-GLM-5-W8A8](https://www.modelscope.cn/models/Eco-Tech/GLM-5-W8A8-xLLM/files)
-  
++ 权重下载:
+
+  [modelscope-GLM-5-W8A8](https://www.modelscope.cn/models/Eco-Tech/GLM-5-W8A8-xLLM-0403/files)
+
+  [modelscope-GLM-5.1-W8A8](https://www.modelscope.cn/models/Eco-Tech/GLM-5.1-W8A8-xLLM/files)
+
+  [modelscope-GLM-5.1-W4A8](https://www.modelscope.cn/models/Eco-Tech/GLM-5.1-w4a8)
+
+  [modelscope-GLM-5.2-W8A8](https://www.modelscope.cn/models/Eco-Tech/GLM-5.2-W8A8/files)
+
 ## 1.拉取镜像环境
 
 首先下载xLLM提供的镜像：
 
 ```bash
 # A2 x86
-docker pull quay.io/jd_xllm/xllm-ai:xllm-dev-a2-x86-20260306
+docker pull quay.io/jd_xllm/xllm-ai:xllm-dev-a2-x86-cann9-20260605
 # A2 arm
-docker pull quay.io/jd_xllm/xllm-ai:xllm-dev-a2-arm-20260306
+docker pull quay.io/jd_xllm/xllm-ai:xllm-dev-a2-arm-cann9-20260605
 # A3 arm
-docker pull quay.io/jd_xllm/xllm-ai:xllm-dev-a3-arm-20260306
+docker pull quay.io/jd_xllm/xllm-ai:xllm-dev-a3-arm-cann9-20260605
 ```
 
 **注意**: A2 机器性能未进行压测。
@@ -50,10 +59,9 @@ sudo docker run -it --ipc=host -u 0 --privileged --name mydocker --network=host 
 
 ```bash
 git clone https://github.com/jd-opensource/xllm
-cd xllm 
-git checkout preview/glm-5
-git submodule init
-git submodule update
+cd xllm
+git checkout release/v0.10.0
+git submodule update --init --recursive
 ```
 
 下载安装依赖:
@@ -66,7 +74,7 @@ yum install numactl
 执行编译，在`build/`下生成可执行文件`build/xllm/core/server/xllm`：
 
 ```bash
-python setup.py build
+python setup.py build --device npu
 ```
 
 ## 3.启动模型
@@ -80,60 +88,35 @@ python -c "import torch_npu
 for i in range(16):torch_npu.npu.set_device(i)"
 ```
 
-### 环境变量
+### 导出MTP权重
 
 ```bash
-##### 1， 配置依赖路径相关环境变量
-# export PYTHON_INCLUDE_PATH="$(python3 -c 'from sysconfig import get_paths; print(get_paths()["include"])')"
-# export PYTHON_LIB_PATH="$(python3 -c 'from sysconfig import get_paths; print(get_paths()["include"])')"
-# export PYTORCH_NPU_INSTALL_PATH=/usr/local/libtorch_npu/
-# export PYTORCH_INSTALL_PATH="$(python3 -c 'import torch, os; print(os.path.dirname(os.path.abspath(torch.__file__)))')"
-# export LIBTORCH_ROOT="$(python3 -c 'import torch, os; print(os.path.dirname(os.path.abspath(torch.__file__)))')"
+python tools/export_mtp.py --input-dir ${W4A8/W8A8权重目录} --output-dir ${导出MTP权重目录}
+```
 
-# export LD_LIBRARY_PATH=/usr/local/Ascend/ascend-toolkit/latest/opp/vendors/xllm/op_api/lib/:$LD_LIBRARY_PATH
-# export LD_LIBRARY_PATH=/usr/local/libtorch_npu/lib:$LD_LIBRARY_PATH
-export LD_PRELOAD=/usr/lib64/libjemalloc.so.2:$LD_PRELOAD
+### 启动准备
 
-# source /usr/local/Ascend/ascend-toolkit/set_env.sh
-# source /usr/local/Ascend/nnal/atb/set_env.sh
-
-##### 2， 配置日志相关环境变量
-rm -rf /root/ascend/log/
-rm -rf core.*
-
-##### 3. 配置性能、通信相关环境变量
-export PYTORCH_NPU_ALLOC_CONF=expandable_segments:True
-export NPU_MEMORY_FRACTION=0.96
-export ATB_WORKSPACE_MEM_ALLOC_ALG_TYPE=3
-export ATB_WORKSPACE_MEM_ALLOC_GLOBAL=1
-
-export OMP_NUM_THREADS=12
-export ALLOW_INTERNAL_FORMAT=1
-
-export ATB_LAYER_INTERNAL_TENSOR_REUSE=1
-export ATB_LLM_ENABLE_AUTO_TRANSPOSE=0
-export ATB_CONVERT_NCHW_TO_AND=1
-export ATB_LAUNCH_KERNEL_WITH_TILING=1
-export ATB_OPERATION_EXECUTE_ASYNC=2
-export ATB_CONTEXT_WORKSPACE_SIZE=0
-export INF_NAN_MODE_ENABLE=1
+```bash
+##### 1， 配置相关环境变量
+export LD_PRELOAD=/usr/lib64/libtcmalloc.so.4:$LD_PRELOAD
 export HCCL_EXEC_TIMEOUT=300
 export HCCL_CONNECT_TIMEOUT=300
 export HCCL_OP_EXPANSION_MODE="AIV"
 export HCCL_IF_BASE_PORT=2864
+
+##### 2， 清除残留日志
+rm -rf /root/ascend/log/
 ```
 
-## 启动命令 - GLM-5 （W8A8权重可单机拉起）
+## 启动命令 - A3单机 - GLM-5.2-W8A8
 
 ```bash
-BATCH_SIZE=256
-#推理最大batch数量
 XLLM_PATH="./myxllm/xllm/build/xllm/core/server/xllm"
-#推理入口文件路径（上一步中编译产物）
-MODEL_PATH=/path/to/GLM-5-W8A8/
-#模型路径（此处为int8量化的Glm-5）
-DRAFT_MODEL_PATH=/path/to/GLM-5-W8A8/GLM-5-W8A8-MTP/
-#Glm-5 导出的mtp权重
+# xllm可执行文件路径
+MODEL_PATH=/path/to/GLM-5.2-W8A8/
+# 模型路径（以Glm-5.2-w8a8为例）
+DRAFT_MODEL_PATH=/path/to/GLM-5.2-MTP/
+# 前面导出的mtp权重
 
 MASTER_NODE_ADDR="11.87.49.110:10015"
 LOCAL_HOST="11.87.49.110"
@@ -148,43 +131,46 @@ do
   PORT=$((START_PORT + i))
   DEVICE=$((START_DEVICE + i))
   LOG_FILE="$LOG_DIR/node_$i.log"
-  nohup numactl -C $((DEVICE*40))-$((DEVICE*40+39)) $XLLM_PATH \
+  #可选：numactl绑核 (NUMA亲和性查询命令： npu-smi info -t topo)
+  #nohup numactl -C $((DEVICE*40))-$((DEVICE*40+39)) $XLLM_PATH \
+  nohup $XLLM_PATH \
     --model $MODEL_PATH \
     --port $PORT \
     --devices="npu:$DEVICE" \
     --master_node_addr=$MASTER_NODE_ADDR \
     --nnodes=$NNODES \
     --node_rank=$i \
-    --max_memory_utilization=0.85 \
-    --max_tokens_per_batch=8192 \
-    --max_seqs_per_batch=32 \
+    --max_memory_utilization=0.86 \
+    --max_tokens_per_batch=4096 \
+    --max_seqs_per_batch=16 \
     --block_size=128 \
-    --enable_prefix_cache=false \
+    --enable_prefix_cache=true \
     --enable_chunked_prefill=true \
-    --communication_backend="hccl" \
-    --enable_schedule_overlap=true \
     --enable_graph=true \
-    --enable_graph_mode_decode_no_padding=true \
+    --enable_schedule_overlap=true \
+    --communication_backend="hccl" \
+    --graph_decode_batch_size_limit=2 \
     --draft_model=$DRAFT_MODEL_PATH \
     --draft_devices="npu:$DEVICE" \
-    --num_speculative_tokens=1 \
-    --ep_size=8 \
-    --dp_size=1 \
+    --num_speculative_tokens=3 \
+    --ep_size=16 \
+    --dp_size=2 \
+    --tool_call_parser=auto \
     > $LOG_FILE 2>&1 &
 done
 
-# numactl -C xxxxx          亲和性绑核(NUMA亲和性查询命令： npu-smi info -t topo)
-#--max_memory_utilization   单卡最大显存占用比例
-#--max_tokens_per_batch     单batch最大token数  （主要限制prefill）
-#--max_seqs_per_batch       单batch最大请求数   （主要限制decoe）
-#--communication_backend    通信backend 可选(hccl / lccl) 此处建议hccl
-#--enable_schedule_overlap  开启异步调度
-#--enable_prefix_cache      开启prefix_cache
-#--enable_chunked_prefill   开启chunked_prefill
-#--enable_graph             开启aclgraph
-#--draft_model              mtp - mtp权重路径
-#--draft_devices            mtp - mtp推理设备(与主模型同一)
-#--num_speculative_tokens   mtp - 预测token数
+# --max_memory_utilization   单卡最大显存占用比例
+# --max_tokens_per_batch     单batch最大token数  （主要限制prefill）
+# --max_seqs_per_batch       单batch最大请求数   （主要限制decode）
+# --communication_backend    通信backend 可选(hccl / lccl) 此处建议hccl
+# --enable_schedule_overlap  开启异步调度
+# --enable_prefix_cache      开启prefix_cache
+# --enable_chunked_prefill   开启chunked_prefill
+# --enable_graph             开启aclgraph，需要额外显存
+# --acl_graph_decode_batch_size_limit    抓图的最大bs，当前需<= 32 / (预测token数 + 1)
+# --draft_model              mtp - mtp权重路径
+# --draft_devices            mtp - mtp推理设备(与主模型同一)
+# --num_speculative_tokens   mtp - 预测token数
 ```
 
 日志出现"Brpc Server Started"表示服务成功拉起。
@@ -197,12 +183,12 @@ export LCCL_DETERMINISTIC=1
 export HCCL_DETERMINISTIC=true
 export ATB_MATMUL_SHUFFLE_K_ENABLE=0
 
-# #开启动态profiling模式
-# export PROFILING_MODE=dynamic
-# \rm -rf ~/dynamic_profiling_socket_*
+# 开启动态profiling模式
+export PROFILING_MODE=dynamic
+\rm -rf ~/dynamic_profiling_socket_*
 ```
 
-## 启动命令 - 双机拉起样例
+## 启动命令 - A3双机拉起样例
 
 ### Node0 (master)
 
@@ -229,22 +215,26 @@ for (( i=0; i<$LOCAL_NODES; i++ ))do
     --node_rank=$i \
     --max_memory_utilization=0.85 \
     --max_tokens_per_batch=8192 \
-    --max_seqs_per_batch=4 \
+    --max_seqs_per_batch=128 \
     --block_size=128 \
-    --enable_prefix_cache=false \
+    --enable_prefix_cache=true \
     --enable_chunked_prefill=true \
     --communication_backend="hccl" \
     --enable_schedule_overlap=true \
     --enable_graph=true \
-    --enable_graph_mode_decode_no_padding=true \
-    --ep_size=16 \
-    --dp_size=1 \
+    --acl_graph_decode_batch_size_limit=4 \
+    --draft_model=$DRAFT_MODEL_PATH \
+    --draft_devices="npu:$DEVICE" \
+    --num_speculative_tokens=3 \
+    --ep_size=32 \
+    --dp_size=4 \
     --rank_tablefile=/yourPath/ranktable.json \
+    --tool_call_parser=auto \
     > $LOG_FILE 2>&1 &
 done
 ```
 
-#### Node1 (worker)
+### Node1 (worker)
 
 ```bash
 MASTER_NODE_ADDR="11.87.49.110:19990"
@@ -269,68 +259,32 @@ for (( i=0; i<$LOCAL_NODES; i++ ))do
     --node_rank=$((i + LOCAL_NODES)) \
     --max_memory_utilization=0.85 \
     --max_tokens_per_batch=8192 \
-    --max_seqs_per_batch=4 \
+    --max_seqs_per_batch=128 \
     --block_size=128 \
-    --enable_prefix_cache=false \
+    --enable_prefix_cache=true \
     --enable_chunked_prefill=true \
     --communication_backend="hccl" \
     --enable_schedule_overlap=true \
     --enable_graph=true \
-    --enable_graph_mode_decode_no_padding=true \
-    --ep_size=16 \
-    --dp_size=1 \
+    --acl_graph_decode_batch_size_limit=4 \
+    --draft_model=$DRAFT_MODEL_PATH \
+    --draft_devices="npu:$DEVICE" \
+    --num_speculative_tokens=3 \
+    --ep_size=32 \
+    --dp_size=4 \
     --rank_tablefile=/yourPath/ranktable.json \
+    --tool_call_parser=auto \
     > $LOG_FILE 2>&1 &
 done
 ```
 
-#### ranktable样例
+### ranktable样例
 
- ranktable配置指导：https://www.hiascend.com/document/detail/zh/canncommercial/83RC1/hccl/hcclug/hcclug_000014.html
+ [A3 ranktable配置](https://www.hiascend.com/document/detail/zh/canncommercial/900/API/hcclug/hcclug_000066.html)
 
-```json
-{
-    "version": "1.0",
-    "server_count": "2",
-    "server_list": [
-        {
-            "server_id": "11.87.49.110",
-            "device": [
-                {
-                    "device_id": "0",
-                    "device_ip": "11.86.23.210",
-                    "rank_id": "0"
-                },
-                ...
-                {
-                    "device_id": "7",
-                    "device_ip": "11.86.23.217",
-                    "rank_id": "7"
-                }
-            ],
-            "host_nic_ip": "reserve"
-        },
-        {
-            "server_id": "11.87.49.111",
-            "device": [
-                {
-                    "device_id": "0",
-                    "device_ip": "11.87.63.202",
-                    "rank_id": "8"
-                },
-                ...
-                {
-                    "device_id": "7",
-                    "device_ip": "11.87.63.209",
-                    "rank_id": "15"
-                }
-            ],
-            "host_nic_ip": "reserve"
-        }
-    ],
-    "status": "completed"
-}
-```
+ [A2 ranktable配置](https://www.hiascend.com/document/detail/zh/canncommercial/900/API/hcclug/hcclug_000067.html)
+
+ （注意A3与A2的ranktable格式差异）
 
 ## device NUMA亲和性查看
 
@@ -348,43 +302,26 @@ numactl -C $((DEVICE*12))-$((DEVICE*12+11))
 
 表示该进程绑在对应亲和的核上，可根据机器具体情况修改绑定的核id
 
-## EX3.Glm-5 权重量化 
+## EX3.Glm-5 权重量化 (GLM5.2 量化指导待更新)
 
 ### 安装msmodelslim
 
 ```bash
-git clone https://gitcode.com/shenxiaolong/msmodelslim.git 
+pip install transformers==5.2.0
+
+git clone https://gitcode.com/Ascend/msmodelslim.git
 cd msmodelslim
 bash install.sh
 ```
-
-### 修改tokenizer_config.json
-
+### 量化执行
 ```bash
-  "extra_special_tokens" 
-    改成 "additional_special_tokens"
-
-  "tokenizer_class": "TokenizersBackend" 
-    改成 "tokenizer_class": "PreTrainedTokenizer"
-```
-
-### 基于GLM-5-BF16 权重量化W8A8权重
-
-```bash
-### 预处理mtp相关权重
-python example/GLM5/extract_mtp.py --model-dir ${model_path}
-
-#指定transformers版本
-pip install transformers==4.48.2
-
-#量化执行（生成量化权重）
-msmodelslim quant  --model_path ${model_path}  --save_path ${save_path}  --model_type DeepSeek-V3.2  --quant_type w8a8  --trust_remote_code True
-
-#拷贝chat_template文件
-cp ${model_path}/chat_template.jinja ${save_path}
-
-#量化mtp权重导出（用于xllm推理）
-python example/GLM5/export_mtp.py --input-dir  ${int8_save_path} --output-dir  ${mtp_save_path}
+msmodelslim quant \
+  --model_path ${MODEL_PATH} \
+  --save_path ${SAVE_PATH} \
+  --device npu:0 \
+  --model_type GLM-5 \
+  --quant_type w8a8 \
+  --trust_remote_code True
 ```
 
 ## PD分离
@@ -432,16 +369,15 @@ make -j 8
 cd ..
 ```
 
-:::caution[可能的错误]
-这里能会遇到关于`boost-locale`和`boost-interprocess`的安装错误：`vcpkg-src/packages/boost-locale_x64-linux/include: No such     file or directory`,`/vcpkg-src/packages/boost-interprocess_x64-linux/include: No such file or directory`
-我们使用`vcpkg`重新安装这些包:
-```bash
-/path/to/vcpkg remove boost-locale boost-interprocess
-/path/to/vcpkg install boost-locale:x64-linux
-/path/to/vcpkg install boost-interprocess:x64-linux
-```
+!!! warning "可能的错误"
+    这里能会遇到关于`boost-locale`和`boost-interprocess`的安装错误：`vcpkg-src/packages/boost-locale_x64-linux/include: No such     file or directory`,`/vcpkg-src/packages/boost-interprocess_x64-linux/include: No such file or directory`
+    我们使用`vcpkg`重新安装这些包:
+    ```bash
+    /path/to/vcpkg remove boost-locale boost-interprocess
+    /path/to/vcpkg install boost-locale:x64-linux
+    /path/to/vcpkg install boost-interprocess:x64-linux
+    ```
 
-:::
 ### PD分离运行
 
 启动etcd:
@@ -476,7 +412,7 @@ ENABLE_DECODE_RESPONSE_TO_SERVICE=true ../xllm-service/build/xllm_service/xllm_m
   MODEL_PATH=/export/home/models/GLM-5-w8a8/
   #模型路径（此处为int量化的Glm-5）
   DRAFT_MODEL_PATH=/export/home/models/GLM-5-MTP/
-  
+
   MASTER_NODE_ADDR="11.87.49.110:10015"
   LOCAL_HOST="11.87.49.110"
   # Service Port
@@ -484,7 +420,7 @@ ENABLE_DECODE_RESPONSE_TO_SERVICE=true ../xllm-service/build/xllm_service/xllm_m
   START_DEVICE=0
   LOG_DIR="logs"
   NNODES=16
-  
+
   for (( i=0; i<$NNODES; i++ ))
   do
     PORT=$((START_PORT + i))
@@ -509,6 +445,7 @@ ENABLE_DECODE_RESPONSE_TO_SERVICE=true ../xllm-service/build/xllm_service/xllm_m
       --draft_model $DRAFT_MODEL_PATH \
       --draft_devices="npu:$DEVICE" \
       --num_speculative_tokens 1 \
+      --tool_call_parser=auto \
       --enable_disagg_pd=true \
       --instance_role=PREFILL \
       --etcd_addr=$LOCAL_HOST:3389 \
@@ -516,13 +453,13 @@ ENABLE_DECODE_RESPONSE_TO_SERVICE=true ../xllm-service/build/xllm_service/xllm_m
       --disagg_pd_port=8877 \
       > $LOG_FILE 2>&1 &
   done
-  
+
   #--etcd_addr=$LOCAL_HOST:3389  参考etcd中advertise-client-urls的配置
   #--instance_role=DECODE     PD配置，DECODE\PREFILL
   ```
 
 - 启动Decode实例
-  
+
   ```bash
     BATCH_SIZE=256
   #推理最大batch数量
@@ -531,7 +468,7 @@ ENABLE_DECODE_RESPONSE_TO_SERVICE=true ../xllm-service/build/xllm_service/xllm_m
   MODEL_PATH=/export/home/models/GLM-5-w8a8/
   #模型路径（此处为int量化的Glm-5）
   DRAFT_MODEL_PATH=/export/home/models/GLM-5-MTP/
-  
+
   MASTER_NODE_ADDR="11.87.49.110:10015"
   LOCAL_HOST="11.87.49.110"
   # Service Port
@@ -539,7 +476,7 @@ ENABLE_DECODE_RESPONSE_TO_SERVICE=true ../xllm-service/build/xllm_service/xllm_m
   START_DEVICE=0
   LOG_DIR="logs"
   NNODES=16
-  
+
   for (( i=0; i<$NNODES; i++ ))
   do
     PORT=$((START_PORT + i))
@@ -564,6 +501,7 @@ ENABLE_DECODE_RESPONSE_TO_SERVICE=true ../xllm-service/build/xllm_service/xllm_m
       --draft_model $DRAFT_MODEL_PATH \
       --draft_devices="npu:$DEVICE" \
       --num_speculative_tokens 1 \
+      --tool_call_parser=auto \
       --enable_disagg_pd=true \
       --instance_role=DECODE \
       --etcd_addr=$LOCAL_HOST:3389 \
@@ -571,11 +509,11 @@ ENABLE_DECODE_RESPONSE_TO_SERVICE=true ../xllm-service/build/xllm_service/xllm_m
       --disagg_pd_port=8877 \
       > $LOG_FILE 2>&1 &
   done
-  
+
   #--etcd_addr=$LOCAL_HOST:3389  参考etcd中advertise-client-urls的配置
   #--instance_role=DECODE     PD配置，DECODE\PREFILL
   ```
-  
+
   需要注意：
 
 - PD分离需要读取`/etc/hccn.conf`文件，确保将物理机上的该文件映射到了容器中

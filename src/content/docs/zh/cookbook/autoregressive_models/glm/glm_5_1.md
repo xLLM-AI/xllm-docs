@@ -1,8 +1,6 @@
 ---
 title: "GLM-5.1"
-description: "GLM-5.1 自回归模型推理实践指南占位页"
+description: "GLM-5.1 推理实践已合并到 GLM-5 系列文档"
 ---
 
-本章节用于汇总 GLM-5.1 自回归模型在 xLLM 中的推理实践。
-
-后续会随着实践内容整理逐步补充。
+GLM-5.1 的推理实践已合并到 [GLM-5 / GLM-5.1 / GLM-5.2](/zh/cookbook/autoregressive_models/glm/glm_5/)。

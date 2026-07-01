@@ -175,9 +175,14 @@ export default defineConfig({
 									collapsed: true,
 									items: [
 										{
+											label: 'GLM-5.2',
+											translations: { 'zh-CN': 'GLM-5.2' },
+											slug: 'cookbook/autoregressive_models/glm/glm_5',
+										},
+										{
 											label: 'GLM-5.1',
 											translations: { 'zh-CN': 'GLM-5.1' },
-											slug: 'cookbook/autoregressive_models/glm/glm_5_1',
+											slug: 'cookbook/autoregressive_models/glm/glm_5',
 										},
 										{
 											label: 'GLM-5',
