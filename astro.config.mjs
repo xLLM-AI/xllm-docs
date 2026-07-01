@@ -40,7 +40,7 @@ export default defineConfig({
 				alt: 'xLLM',
 				replacesTitle: true,
 			},
-			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/jd-opensource/xllm' }],
+			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/xLLM-AI/xllm-docs' }],
 			sidebar: [
 				{ label: 'Home', translations: { 'zh-CN': '主页' }, slug: '' },
 				{
