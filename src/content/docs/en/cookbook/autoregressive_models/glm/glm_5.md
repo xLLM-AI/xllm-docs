@@ -1,5 +1,5 @@
 ---
-title: "GLM5-W8A8"
+title: "GLM-5 / GLM-5.1 / GLM-5.2"
 sidebar:
   order: 2
 ---
@@ -7,19 +7,27 @@ sidebar:
 
 + Available in China: https://gitcode.com/xLLM-AI/xllm
 
-+ Weight download: [modelscope-GLM-5-W8A8](https://www.modelscope.cn/models/Eco-Tech/GLM-5-W8A8-xLLM/files)
-  
++ Weight downloads:
+
+  [modelscope-GLM-5-W8A8](https://www.modelscope.cn/models/Eco-Tech/GLM-5-W8A8-xLLM-0403/files)
+
+  [modelscope-GLM-5.1-W8A8](https://www.modelscope.cn/models/Eco-Tech/GLM-5.1-W8A8-xLLM/files)
+
+  [modelscope-GLM-5.1-W4A8](https://www.modelscope.cn/models/Eco-Tech/GLM-5.1-w4a8)
+
+  [modelscope-GLM-5.2-W8A8](https://www.modelscope.cn/models/Eco-Tech/GLM-5.2-W8A8/files)
+
 ## 1. Pull the Image Environment
 
 First, download the image provided by xLLM:
 
 ```bash
 # A2 x86
-docker pull quay.io/jd_xllm/xllm-ai:xllm-dev-a2-x86-20260306
+docker pull quay.io/jd_xllm/xllm-ai:xllm-dev-a2-x86-cann9-20260605
 # A2 arm
-docker pull quay.io/jd_xllm/xllm-ai:xllm-dev-a2-arm-20260306
+docker pull quay.io/jd_xllm/xllm-ai:xllm-dev-a2-arm-cann9-20260605
 # A3 arm
-docker pull quay.io/jd_xllm/xllm-ai:xllm-dev-a3-arm-20260306
+docker pull quay.io/jd_xllm/xllm-ai:xllm-dev-a3-arm-cann9-20260605
 ```
 
 **Note**: Performance stress testing has not been performed on A2 machines.
@@ -51,9 +59,8 @@ Download the official repository and module dependencies:
 ```bash
 git clone https://github.com/jd-opensource/xllm
 cd xllm 
-git checkout preview/glm-5
-git submodule init
-git submodule update
+git checkout release/v0.10.0
+git submodule update --init --recursive
 ```
 
 Download and install dependencies:
@@ -66,7 +73,7 @@ yum install numactl
 Run the build. The executable `build/xllm/core/server/xllm` will be generated under `build/`:
 
 ```bash
-python setup.py build
+python setup.py build --device npu
 ```
 
 ## 3. Start the Model
@@ -80,60 +87,35 @@ python -c "import torch_npu
 for i in range(16):torch_npu.npu.set_device(i)"
 ```
 
+### Export MTP Weights
+
+```bash
+python tools/export_mtp.py --input-dir ${W4A8/W8A8_WEIGHT_DIR} --output-dir ${EXPORTED_MTP_WEIGHT_DIR}
+```
+
 ### Environment Variables
 
 ```bash
-##### 1. Configure dependency path environment variables
-# export PYTHON_INCLUDE_PATH="$(python3 -c 'from sysconfig import get_paths; print(get_paths()["include"])')"
-# export PYTHON_LIB_PATH="$(python3 -c 'from sysconfig import get_paths; print(get_paths()["include"])')"
-# export PYTORCH_NPU_INSTALL_PATH=/usr/local/libtorch_npu/
-# export PYTORCH_INSTALL_PATH="$(python3 -c 'import torch, os; print(os.path.dirname(os.path.abspath(torch.__file__)))')"
-# export LIBTORCH_ROOT="$(python3 -c 'import torch, os; print(os.path.dirname(os.path.abspath(torch.__file__)))')"
-
-# export LD_LIBRARY_PATH=/usr/local/Ascend/ascend-toolkit/latest/opp/vendors/xllm/op_api/lib/:$LD_LIBRARY_PATH
-# export LD_LIBRARY_PATH=/usr/local/libtorch_npu/lib:$LD_LIBRARY_PATH
-export LD_PRELOAD=/usr/lib64/libjemalloc.so.2:$LD_PRELOAD
-
-# source /usr/local/Ascend/ascend-toolkit/set_env.sh
-# source /usr/local/Ascend/nnal/atb/set_env.sh
-
-##### 2. Configure log-related environment variables
-rm -rf /root/ascend/log/
-rm -rf core.*
-
-##### 3. Configure performance and communication-related environment variables
-export PYTORCH_NPU_ALLOC_CONF=expandable_segments:True
-export NPU_MEMORY_FRACTION=0.96
-export ATB_WORKSPACE_MEM_ALLOC_ALG_TYPE=3
-export ATB_WORKSPACE_MEM_ALLOC_GLOBAL=1
-
-export OMP_NUM_THREADS=12
-export ALLOW_INTERNAL_FORMAT=1
-
-export ATB_LAYER_INTERNAL_TENSOR_REUSE=1
-export ATB_LLM_ENABLE_AUTO_TRANSPOSE=0
-export ATB_CONVERT_NCHW_TO_AND=1
-export ATB_LAUNCH_KERNEL_WITH_TILING=1
-export ATB_OPERATION_EXECUTE_ASYNC=2
-export ATB_CONTEXT_WORKSPACE_SIZE=0
-export INF_NAN_MODE_ENABLE=1
+##### 1. Configure environment variables
+export LD_PRELOAD=/usr/lib64/libtcmalloc.so.4:$LD_PRELOAD
 export HCCL_EXEC_TIMEOUT=300
 export HCCL_CONNECT_TIMEOUT=300
 export HCCL_OP_EXPANSION_MODE="AIV"
 export HCCL_IF_BASE_PORT=2864
+
+##### 2. Clean residual logs
+rm -rf /root/ascend/log/
 ```
 
-## Startup Command - GLM-5 (W8A8 weights can be started on a single machine)
+## Startup Command - A3 Single Node - GLM-5.2-W8A8
 
 ```bash
-BATCH_SIZE=256
-# Maximum inference batch size
 XLLM_PATH="./myxllm/xllm/build/xllm/core/server/xllm"
-# Inference entry binary path, which is the build artifact from the previous step
-MODEL_PATH=/path/to/GLM-5-W8A8/
-# Model path, here using the int8-quantized GLM-5
-DRAFT_MODEL_PATH=/path/to/GLM-5-W8A8/GLM-5-W8A8-MTP/
-# Exported MTP weights for GLM-5
+# Path to the xLLM executable
+MODEL_PATH=/path/to/GLM-5.2-W8A8/
+# Model path, using GLM-5.2-W8A8 as an example
+DRAFT_MODEL_PATH=/path/to/GLM-5.2-MTP/
+# MTP weights exported in the previous step
 
 MASTER_NODE_ADDR="11.87.49.110:10015"
 LOCAL_HOST="11.87.49.110"
@@ -148,43 +130,46 @@ do
   PORT=$((START_PORT + i))
   DEVICE=$((START_DEVICE + i))
   LOG_FILE="$LOG_DIR/node_$i.log"
-  nohup numactl -C $((DEVICE*40))-$((DEVICE*40+39)) $XLLM_PATH \
+  # Optional: bind CPU cores with numactl. Query NUMA affinity with: npu-smi info -t topo
+  #nohup numactl -C $((DEVICE*40))-$((DEVICE*40+39)) $XLLM_PATH \
+  nohup $XLLM_PATH \
     --model $MODEL_PATH \
     --port $PORT \
     --devices="npu:$DEVICE" \
     --master_node_addr=$MASTER_NODE_ADDR \
     --nnodes=$NNODES \
     --node_rank=$i \
-    --max_memory_utilization=0.85 \
-    --max_tokens_per_batch=8192 \
-    --max_seqs_per_batch=32 \
+    --max_memory_utilization=0.86 \
+    --max_tokens_per_batch=4096 \
+    --max_seqs_per_batch=16 \
     --block_size=128 \
-    --enable_prefix_cache=false \
+    --enable_prefix_cache=true \
     --enable_chunked_prefill=true \
-    --communication_backend="hccl" \
-    --enable_schedule_overlap=true \
     --enable_graph=true \
-    --enable_graph_mode_decode_no_padding=true \
+    --enable_schedule_overlap=true \
+    --communication_backend="hccl" \
+    --graph_decode_batch_size_limit=2 \
     --draft_model=$DRAFT_MODEL_PATH \
     --draft_devices="npu:$DEVICE" \
-    --num_speculative_tokens=1 \
-    --ep_size=8 \
-    --dp_size=1 \
+    --num_speculative_tokens=3 \
+    --ep_size=16 \
+    --dp_size=2 \
+    --tool_call_parser=auto \
     > $LOG_FILE 2>&1 &
 done
 
-# numactl -C xxxxx          Bind cores by affinity. NUMA affinity query command: npu-smi info -t topo.
-# --max_memory_utilization  Maximum single-card memory usage ratio.
-# --max_tokens_per_batch    Maximum token count per batch. Mainly limits prefill.
-# --max_seqs_per_batch      Maximum request count per batch. Mainly limits decode.
-# --communication_backend   Communication backend. Options: hccl / lccl. hccl is recommended here.
-# --enable_schedule_overlap Enable async scheduling.
-# --enable_prefix_cache     Enable prefix cache.
-# --enable_chunked_prefill  Enable chunked prefill.
-# --enable_graph            Enable aclgraph.
-# --draft_model             MTP weight path.
-# --draft_devices           MTP inference device, the same as the main model.
-# --num_speculative_tokens  Number of tokens predicted by MTP.
+# --max_memory_utilization   Maximum memory utilization ratio per card.
+# --max_tokens_per_batch     Maximum tokens per batch. Mainly limits prefill.
+# --max_seqs_per_batch       Maximum requests per batch. Mainly limits decode.
+# --communication_backend    Communication backend. Options: hccl / lccl. hccl is recommended here.
+# --enable_schedule_overlap  Enable async scheduling.
+# --enable_prefix_cache      Enable prefix cache.
+# --enable_chunked_prefill   Enable chunked prefill.
+# --enable_graph             Enable aclgraph. It requires extra memory.
+# --acl_graph_decode_batch_size_limit    Maximum decode batch size for graph capture. It must be <= 32 / (number of speculative tokens + 1).
+# --draft_model              MTP draft-model weight path.
+# --draft_devices            MTP inference device, the same as the main model.
+# --num_speculative_tokens   Number of speculative tokens predicted by MTP.
 ```
 
 When the log contains `"Brpc Server Started"`, the service has started successfully.
@@ -198,8 +183,8 @@ export HCCL_DETERMINISTIC=true
 export ATB_MATMUL_SHUFFLE_K_ENABLE=0
 
 # Enable dynamic profiling mode
-# export PROFILING_MODE=dynamic
-# \rm -rf ~/dynamic_profiling_socket_*
+export PROFILING_MODE=dynamic
+\rm -rf ~/dynamic_profiling_socket_*
 ```
 
 ## Startup Command - Two-Machine Startup Example
@@ -217,10 +202,13 @@ LOCAL_NODES=16
 export HCCL_IF_BASE_PORT=48439
 unset HCCL_OP_EXPANSION_MODE
 
-for (( i=0; i<$LOCAL_NODES; i++ ))do
+for (( i=0; i<$LOCAL_NODES; i++ ))
+do
   PORT=$((START_PORT + i))
-  DEVICE=$((START_DEVICE + i));  LOG_FILE="$LOG_DIR/node_$i.log"
-  nohup numactl -C $((DEVICE*40))-$((DEVICE*40+39)) $XLLM_PATH \    --model $MODEL_PATH \
+  DEVICE=$((START_DEVICE + i))
+  LOG_FILE="$LOG_DIR/node_$i.log"
+  nohup numactl -C $((DEVICE*40))-$((DEVICE*40+39)) $XLLM_PATH \
+    --model $MODEL_PATH \
     --host $LOCAL_HOST \
     --port $PORT \
     --devices="npu:$DEVICE" \
@@ -229,17 +217,21 @@ for (( i=0; i<$LOCAL_NODES; i++ ))do
     --node_rank=$i \
     --max_memory_utilization=0.85 \
     --max_tokens_per_batch=8192 \
-    --max_seqs_per_batch=4 \
+    --max_seqs_per_batch=128 \
     --block_size=128 \
-    --enable_prefix_cache=false \
+    --enable_prefix_cache=true \
     --enable_chunked_prefill=true \
     --communication_backend="hccl" \
     --enable_schedule_overlap=true \
     --enable_graph=true \
-    --enable_graph_mode_decode_no_padding=true \
-    --ep_size=16 \
-    --dp_size=1 \
+    --acl_graph_decode_batch_size_limit=4 \
+    --draft_model=$DRAFT_MODEL_PATH \
+    --draft_devices="npu:$DEVICE" \
+    --num_speculative_tokens=3 \
+    --ep_size=32 \
+    --dp_size=4 \
     --rank_tablefile=/yourPath/ranktable.json \
+    --tool_call_parser=auto \
     > $LOG_FILE 2>&1 &
 done
 ```
@@ -257,10 +249,13 @@ LOCAL_NODES=16
 export HCCL_IF_BASE_PORT=48439
 unset HCCL_OP_EXPANSION_MODE
 
-for (( i=0; i<$LOCAL_NODES; i++ ))do
+for (( i=0; i<$LOCAL_NODES; i++ ))
+do
   PORT=$((START_PORT + i))
-  DEVICE=$((START_DEVICE + i));  LOG_FILE="$LOG_DIR/node_$i.log"
-  nohup numactl -C $((DEVICE*40))-$((DEVICE*40+39)) $XLLM_PATH \    --model $MODEL_PATH \
+  DEVICE=$((START_DEVICE + i))
+  LOG_FILE="$LOG_DIR/node_$i.log"
+  nohup numactl -C $((DEVICE*40))-$((DEVICE*40+39)) $XLLM_PATH \
+    --model $MODEL_PATH \
     --host $LOCAL_HOST \
     --port $PORT \
     --devices="npu:$DEVICE" \
@@ -269,68 +264,32 @@ for (( i=0; i<$LOCAL_NODES; i++ ))do
     --node_rank=$((i + LOCAL_NODES)) \
     --max_memory_utilization=0.85 \
     --max_tokens_per_batch=8192 \
-    --max_seqs_per_batch=4 \
+    --max_seqs_per_batch=128 \
     --block_size=128 \
-    --enable_prefix_cache=false \
+    --enable_prefix_cache=true \
     --enable_chunked_prefill=true \
     --communication_backend="hccl" \
     --enable_schedule_overlap=true \
     --enable_graph=true \
-    --enable_graph_mode_decode_no_padding=true \
-    --ep_size=16 \
-    --dp_size=1 \
+    --acl_graph_decode_batch_size_limit=4 \
+    --draft_model=$DRAFT_MODEL_PATH \
+    --draft_devices="npu:$DEVICE" \
+    --num_speculative_tokens=3 \
+    --ep_size=32 \
+    --dp_size=4 \
     --rank_tablefile=/yourPath/ranktable.json \
+    --tool_call_parser=auto \
     > $LOG_FILE 2>&1 &
 done
 ```
 
-#### ranktable Example
+### Rank Table Examples
 
-ranktable configuration guide: https://www.hiascend.com/document/detail/zh/canncommercial/83RC1/hccl/hcclug/hcclug_000014.html
+[A3 rank table configuration](https://www.hiascend.com/document/detail/zh/canncommercial/900/API/hcclug/hcclug_000066.html)
 
-```json
-{
-    "version": "1.0",
-    "server_count": "2",
-    "server_list": [
-        {
-            "server_id": "11.87.49.110",
-            "device": [
-                {
-                    "device_id": "0",
-                    "device_ip": "11.86.23.210",
-                    "rank_id": "0"
-                },
-                ...
-                {
-                    "device_id": "7",
-                    "device_ip": "11.86.23.217",
-                    "rank_id": "7"
-                }
-            ],
-            "host_nic_ip": "reserve"
-        },
-        {
-            "server_id": "11.87.49.111",
-            "device": [
-                {
-                    "device_id": "0",
-                    "device_ip": "11.87.63.202",
-                    "rank_id": "8"
-                },
-                ...
-                {
-                    "device_id": "7",
-                    "device_ip": "11.87.63.209",
-                    "rank_id": "15"
-                }
-            ],
-            "host_nic_ip": "reserve"
-        }
-    ],
-    "status": "completed"
-}
-```
+[A2 rank table configuration](https://www.hiascend.com/document/detail/zh/canncommercial/900/API/hcclug/hcclug_000067.html)
+
+Note that the rank table formats differ between A3 and A2.
 
 ## View Device NUMA Affinity
 
@@ -348,43 +307,30 @@ numactl -C $((DEVICE*12))-$((DEVICE*12+11))
 
 indicates that the process is bound to the corresponding affinity cores. You can modify the bound core IDs according to the machine.
 
-## EX3. GLM-5 Weight Quantization 
+## EX3. GLM-5 Weight Quantization
+
+GLM-5.2 quantization guidance will be updated later.
 
 ### Install msmodelslim
 
 ```bash
-git clone https://gitcode.com/shenxiaolong/msmodelslim.git 
+pip install transformers==5.2.0
+
+git clone https://gitcode.com/Ascend/msmodelslim.git
 cd msmodelslim
 bash install.sh
 ```
 
-### Modify tokenizer_config.json
+### Run Quantization
 
 ```bash
-  "extra_special_tokens" 
-    change to "additional_special_tokens"
-
-  "tokenizer_class": "TokenizersBackend" 
-    change to "tokenizer_class": "PreTrainedTokenizer"
-```
-
-### Quantize W8A8 Weights from GLM-5-BF16 Weights
-
-```bash
-### Preprocess MTP-related weights
-python example/GLM5/extract_mtp.py --model-dir ${model_path}
-
-# Specify the transformers version
-pip install transformers==4.48.2
-
-# Run quantization and generate quantized weights
-msmodelslim quant  --model_path ${model_path}  --save_path ${save_path}  --model_type DeepSeek-V3.2  --quant_type w8a8  --trust_remote_code True
-
-# Copy the chat_template file
-cp ${model_path}/chat_template.jinja ${save_path}
-
-# Export quantized MTP weights for xLLM inference
-python example/GLM5/export_mtp.py --input-dir  ${int8_save_path} --output-dir  ${mtp_save_path}
+msmodelslim quant \
+  --model_path ${MODEL_PATH} \
+  --save_path ${SAVE_PATH} \
+  --device npu:0 \
+  --model_type GLM-5 \
+  --quant_type w8a8 \
+  --trust_remote_code True
 ```
 
 ## PD Disaggregation
@@ -442,6 +388,7 @@ Reinstall these packages with `vcpkg`:
 ```
 
 :::
+
 ### Run PD Disaggregation
 
 Start etcd:
@@ -467,6 +414,7 @@ For cross-machine configuration, start xllm service with:
 ```bash
 ENABLE_DECODE_RESPONSE_TO_SERVICE=true ../xllm-service/build/xllm_service/xllm_master_serving --etcd_addr="11.87.191.82:3389" --http_server_port 38888 --rpc_server_port 38889 --tokenizer_path=/export/home/models/GLM-5-W8A8/
 ```
+
 - Start the Prefill instance
 ```bash
   BATCH_SIZE=256
@@ -509,6 +457,7 @@ ENABLE_DECODE_RESPONSE_TO_SERVICE=true ../xllm-service/build/xllm_service/xllm_m
       --draft_model $DRAFT_MODEL_PATH \
       --draft_devices="npu:$DEVICE" \
       --num_speculative_tokens 1 \
+      --tool_call_parser=auto \
       --enable_disagg_pd=true \
       --instance_role=PREFILL \
       --etcd_addr=$LOCAL_HOST:3389 \
@@ -564,6 +513,7 @@ ENABLE_DECODE_RESPONSE_TO_SERVICE=true ../xllm-service/build/xllm_service/xllm_m
       --draft_model $DRAFT_MODEL_PATH \
       --draft_devices="npu:$DEVICE" \
       --num_speculative_tokens 1 \
+      --tool_call_parser=auto \
       --enable_disagg_pd=true \
       --instance_role=DECODE \
       --etcd_addr=$LOCAL_HOST:3389 \
