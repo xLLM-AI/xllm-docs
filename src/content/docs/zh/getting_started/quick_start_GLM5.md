@@ -1,3 +1,9 @@
+---
+title: "GLM-5 快速开始"
+sidebar:
+  order: 2
+---
+
 # 使用 xLLM 在 Ascend A3设备 推理 GLM-5/5.1/5.2 - BF16/W8A8/W4A8 基座模型
 
 + 源码地址：https://github.com/jd-opensource/xllm
