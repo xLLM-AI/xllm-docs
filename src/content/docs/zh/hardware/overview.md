@@ -13,6 +13,7 @@ xLLM 支持多种加速器后端，用于大模型推理部署。本章节汇总
 - [昇腾 NPU](/zh/hardware/ascend_npu/) - 昇腾 NPU 环境、运行时变量和 HCCL 启动注意事项。
 - [寒武纪 MLU](/zh/hardware/cambricon_mlu/) - MLU 后端环境和启动入口。
 - [海光 DCU](/zh/hardware/dcu/) - 海光 DCU 后端环境和启动入口。
+- [沐曦 MACA](/zh/hardware/metax_maca/) - 沐曦 MACA 后端环境和启动入口。
 
 ## 通用流程
 

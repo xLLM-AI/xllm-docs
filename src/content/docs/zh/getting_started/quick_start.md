@@ -112,6 +112,36 @@ docker run -it \
 /bin/bash
 ```
 
+### 沐曦 MACA
+
+下面是我们构建好的开发镜像。
+```bash
+docker pull pub-registry1.metax-tech.com/dev-m01421/xllm-maca3.7.1.9:v1
+```
+
+容器启动命令如下：
+```bash
+docker run -it \
+--ipc=host \
+-u 0 \
+--name xllm-maca \
+--network=host \
+--privileged=true \
+--shm-size 100gb \
+--device=/dev/mxcd \
+--device=/dev/dri \
+--device=/dev/infiniband \
+--security-opt seccomp=unconfined \
+--security-opt apparmor=unconfined \
+--group-add video \
+--ulimit memlock=-1 \
+-v /opt/maca:/opt/maca \
+-v $HOME:$HOME \
+-w $HOME \
+<docker_image_name> \
+/bin/bash
+```
+
 ## 编译xllm
 
 如果下载的是release镜像，即tag中带有版本号的镜像，可以跳过此步，因为release镜像自带编译好的xllm二进制文件，可以直接调用`xllm`。

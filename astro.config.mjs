@@ -88,6 +88,11 @@ export default defineConfig({
 							translations: { 'zh-CN': '海光 DCU' },
 							slug: 'hardware/dcu',
 						},
+						{
+							label: 'MetaX MACA',
+							translations: { 'zh-CN': '沐曦 MACA' },
+							slug: 'hardware/metax_maca',
+						},
 					],
 				},
 				{

@@ -159,3 +159,43 @@ do
     --node_rank=$i \ > $LOG_FILE 2>&1 &
 done
 ```
+
+## MetaX MACA
+
+```bash
+#!/bin/bash
+set -e
+
+rm -rf core.*
+
+export CUDA_VISIBLE_DEVICES=0
+export FLASHINFER_OPS_PATH=/opt/conda/lib/python3.10/site-packages/flashinfer/data/aot/
+
+MODEL_PATH="/path/to/model/Qwen3-8B"
+MASTER_NODE_ADDR="127.0.0.1:9748"
+START_PORT=18000
+START_DEVICE=0
+LOG_DIR="log"
+NNODES=1
+
+mkdir -p $LOG_DIR
+
+for (( i=0; i<$NNODES; i++ ))
+do
+  PORT=$((START_PORT + i))
+  DEVICE=$((START_DEVICE + i))
+  LOG_FILE="$LOG_DIR/node_$i.log"
+  xllm \
+    --model $MODEL_PATH \
+    --devices="cuda:$DEVICE" \
+    --port $PORT \
+    --nnodes=$NNODES \
+    --master_node_addr=$MASTER_NODE_ADDR \
+    --block_size=128 \
+    --max_memory_utilization=0.86 \
+    --enable_prefix_cache=false \
+    --enable_chunked_prefill=false \
+    --enable_schedule_overlap=true \
+    --node_rank=$i \ > $LOG_FILE 2>&1 &
+done
+```
