@@ -13,6 +13,7 @@ xLLM supports multiple accelerator backends for large-scale model inference. Thi
 - [Ascend NPU](/en/hardware/ascend_npu/) - Ascend NPU setup, runtime environment, and HCCL launch notes.
 - [Cambricon MLU](/en/hardware/cambricon_mlu/) - MLU backend setup and launch entry points.
 - [Hygon DCU](/en/hardware/dcu/) - Hygon DCU backend setup and launch entry points.
+- [MetaX MACA](/en/hardware/metax_maca/) - MetaX MACA backend setup and launch entry points.
 
 ## Common Workflow
 
