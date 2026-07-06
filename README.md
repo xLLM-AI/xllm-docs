@@ -3,7 +3,7 @@
 [English](./README.md) | [简体中文](./README.zh-CN.md)
 
 This repository contains the Astro + Starlight documentation site for
-[xLLM](https://github.com/jd-opensource/xllm), an LLM inference framework for
+[xLLM](https://github.com/xLLM-AI/xllm), an LLM inference framework for
 high-performance serving on domestic AI accelerators.
 
 The site is built with Starlight and `starlight-theme-rapide`. It includes a
@@ -85,4 +85,4 @@ npm run preview
 
 ## Related Repository
 
-- xLLM source code: <https://github.com/jd-opensource/xllm>
+- xLLM source code: <https://github.com/xLLM-AI/xllm>

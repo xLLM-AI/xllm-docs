@@ -7,9 +7,9 @@ To facilitate users in quickly using xLLM for offline inference, we provide Pyth
 
 ## LLM
 
-LLM inference example: [:simple-github: https://github.com/jd-opensource/xllm/blob/main/examples/generate.py](https://github.com/jd-opensource/xllm/blob/main/examples/generate.py)
+LLM inference example: [:simple-github: https://github.com/xLLM-AI/xllm/blob/main/examples/generate.py](https://github.com/xLLM-AI/xllm/blob/main/examples/generate.py)
 
-LLM Beam Search example: [:simple-github: https://github.com/jd-opensource/xllm/blob/main/examples/generate_beam_search.py](https://github.com/jd-opensource/xllm/blob/main/examples/generate_beam_search.py)
+LLM Beam Search example: [:simple-github: https://github.com/xLLM-AI/xllm/blob/main/examples/generate_beam_search.py](https://github.com/xLLM-AI/xllm/blob/main/examples/generate_beam_search.py)
 
 Use `BeamSearchParams` with `beam_width` greater than `1`, then call `llm.beam_search(...)`:
 
@@ -36,8 +36,8 @@ For LLM Beam Search, use `beam_width` as the switch. `top_logprobs` controls the
 
 ## Embedding
 
-Generate embedding example: [:simple-github: https://github.com/jd-opensource/xllm/blob/main/examples/generate_embedding.py](https://github.com/jd-opensource/xllm/blob/main/examples/generate_embedding.py)
+Generate embedding example: [:simple-github: https://github.com/xLLM-AI/xllm/blob/main/examples/generate_embedding.py](https://github.com/xLLM-AI/xllm/blob/main/examples/generate_embedding.py)
 
 ## VLM
 
-VLM inference example: [:simple-github: https://github.com/jd-opensource/xllm/blob/main/examples/generate_vlm.py](https://github.com/jd-opensource/xllm/blob/main/examples/generate_vlm.py)
+VLM inference example: [:simple-github: https://github.com/xLLM-AI/xllm/blob/main/examples/generate_vlm.py](https://github.com/xLLM-AI/xllm/blob/main/examples/generate_vlm.py)

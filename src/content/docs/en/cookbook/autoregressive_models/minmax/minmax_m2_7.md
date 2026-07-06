@@ -4,7 +4,7 @@ sidebar:
   order: 3
 ---
 
-+ Source code: https://github.com/jd-opensource/xllm
++ Source code: https://github.com/xLLM-AI/xllm
 
 + Available in China: https://gitcode.com/xLLM-AI/xllm
 
@@ -73,7 +73,7 @@ sudo docker run -it --ipc=host -u 0 --privileged --name xllm_minimax --network=h
 Download the official repository and module dependencies:
 
 ```bash
-git clone https://github.com/jd-opensource/xllm
+git clone https://github.com/xLLM-AI/xllm.git
 cd xllm
 git checkout preview/minimax-minimal
 git submodule init

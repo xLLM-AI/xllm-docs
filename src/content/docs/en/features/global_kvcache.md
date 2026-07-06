@@ -21,7 +21,7 @@ The overall architecture is shown in the diagram below:
 
 #### Install Dependencies
 - **xLLM**: Refer to [Quick Start](/en/getting_started/quick_start/)
-- **xLLM Service**: Refer to [xLLM Service](https://github.com/jd-opensource/xllm-service)
+- **xLLM Service**: Refer to [xLLM Service](https://github.com/xLLM-AI/xllm-service)
 
 ### Usage Instructions
 

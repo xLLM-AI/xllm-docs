@@ -3,7 +3,7 @@ title: "xLLM Service"
 sidebar:
   order: 90
 ---
-[:simple-github: xLLM Service](https://github.com/jd-opensource/xllm-service)
+[:simple-github: xLLM Service](https://github.com/xLLM-AI/xllm-service)
 
 ## 简介
 

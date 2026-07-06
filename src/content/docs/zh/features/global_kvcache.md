@@ -18,7 +18,7 @@ xLLM 全局KV Cache功能主要通过以下三个模块实现：
 ### 使用准备
 #### 安装相关依赖
 - **xLLM**: 参见[快速开始](/zh/getting_started/quick_start/)
-- **xLLM Service**: 参见[xLLM Service](https://github.com/jd-opensource/xllm-service)
+- **xLLM Service**: 参见[xLLM Service](https://github.com/xLLM-AI/xllm-service)
 
 ### 使用方式
 1. etcd启动配置：

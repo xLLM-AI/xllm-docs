@@ -3,7 +3,7 @@ title: "GLM-5 / GLM-5.1 / GLM-5.2"
 sidebar:
   order: 2
 ---
-+ Source code: https://github.com/jd-opensource/xllm
++ Source code: https://github.com/xLLM-AI/xllm
 
 + Available in China: https://gitcode.com/xLLM-AI/xllm
 
@@ -57,7 +57,7 @@ sudo docker run -it --ipc=host -u 0 --privileged --name mydocker --network=host 
 Download the official repository and module dependencies:
 
 ```bash
-git clone https://github.com/jd-opensource/xllm
+git clone https://github.com/xLLM-AI/xllm.git
 cd xllm 
 git checkout release/v0.10.0
 git submodule update --init --recursive
@@ -339,15 +339,15 @@ msmodelslim quant \
 
 #### PD Disaggregated Deployment
 
-`xllm` supports PD disaggregated deployment. This must be used together with another open-source library, [xllm service](https://github.com/jd-opensource/xllm-service).
+`xllm` supports PD disaggregated deployment. This must be used together with another open-source library, [xllm service](https://github.com/xLLM-AI/xllm-service).
 
 ##### xLLM Service Dependencies
 
 First, download and install `xllm service`, similar to installing and building `xllm`:
 
 ```bash
-git clone https://github.com/jd-opensource/xllm-service
-cd xllm_service
+git clone https://github.com/xLLM-AI/xllm-service.git
+cd xllm-service
 git submodule init
 git submodule update
 ```

@@ -4,7 +4,7 @@ sidebar:
   order: 1
 ---
 
-+ Source code: https://github.com/jd-opensource/xllm
++ Source code: https://github.com/xLLM-AI/xllm
 
 + Available in China: https://gitcode.com/xLLM-AI/xllm
 
@@ -57,7 +57,7 @@ docker run -it -d \
 Download the official repository and module dependencies:
 
 ```bash
-git clone https://github.com/jd-opensource/xllm
+git clone https://github.com/xLLM-AI/xllm.git
 cd xllm
 pip install pre-commit
 pre-commit install

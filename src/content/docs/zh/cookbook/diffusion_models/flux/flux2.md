@@ -7,7 +7,7 @@ sidebar:
 
 本章节用于汇总 Flux2 扩散模型在 xLLM 中的推理实践。
 
-+ 源码地址：https://github.com/jd-opensource/xllm
++ 源码地址：https://github.com/xLLM-AI/xllm
 
 + 国内可用: https://gitcode.com/xLLM-AI/xllm
 
@@ -58,7 +58,7 @@ docker exec -it $CONTAINER bash
 下载官方仓库与模块依赖：
 
 ```bash
-git clone https://github.com/jd-opensource/xllm
+git clone https://github.com/xLLM-AI/xllm.git
 cd xllm 
 
 ```

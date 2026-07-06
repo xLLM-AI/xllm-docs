@@ -18,7 +18,7 @@ xLLM PD分离功能主要通过以下三个模块实现：
 ### 使用准备
 #### 安装相关依赖
 - **xLLM**: 参见[安装编译](/zh/getting_started/quick_start/)
-- **xLLM Service**: 参见[xLLM Service](https://github.com/jd-opensource/xllm-service)
+- **xLLM Service**: 参见[xLLM Service](https://github.com/xLLM-AI/xllm-service)
 
 ### 启动PD分离服务
 1. 启动etcd

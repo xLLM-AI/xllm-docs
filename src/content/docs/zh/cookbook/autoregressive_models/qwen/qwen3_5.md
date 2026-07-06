@@ -4,7 +4,7 @@ sidebar:
   order: 1
 ---
 
-+ 源码地址：https://github.com/jd-opensource/xllm
++ 源码地址：https://github.com/xLLM-AI/xllm
 
 + 国内可用: https://gitcode.com/xLLM-AI/xllm
 
@@ -57,7 +57,7 @@ docker run -it -d \
 下载官方仓库与模块依赖：
 
 ```bash
-git clone https://github.com/jd-opensource/xllm
+git clone https://github.com/xLLM-AI/xllm.git
 cd xllm
 pip install pre-commit
 pre-commit install

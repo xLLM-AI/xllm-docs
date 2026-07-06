@@ -2,7 +2,7 @@
 
 [English](./README.md) | [简体中文](./README.zh-CN.md)
 
-本仓库是 [xLLM](https://github.com/jd-opensource/xllm) 的 Astro + Starlight
+本仓库是 [xLLM](https://github.com/xLLM-AI/xllm) 的 Astro + Starlight
 文档站。xLLM 是面向国产 AI 加速器的高性能大语言模型推理框架。
 
 站点基于 Starlight 和 `starlight-theme-rapide` 构建，包含自定义顶部导航、
@@ -81,4 +81,4 @@ npm run preview
 
 ## 相关仓库
 
-- xLLM 源码：<https://github.com/jd-opensource/xllm>
+- xLLM 源码：<https://github.com/xLLM-AI/xllm>

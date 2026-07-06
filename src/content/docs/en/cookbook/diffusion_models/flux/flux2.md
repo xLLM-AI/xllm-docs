@@ -7,7 +7,7 @@ sidebar:
 
 This section will collect Flux2 diffusion model inference recipes for xLLM.
 
-+ Source code: https://github.com/jd-opensource/xllm
++ Source code: https://github.com/xLLM-AI/xllm
 
 + Available in China: https://gitcode.com/xLLM-AI/xllm
 
@@ -57,7 +57,7 @@ docker exec -it $CONTAINER bash
 Download the official repository and module dependencies:
 
 ```bash
-git clone https://github.com/jd-opensource/xllm
+git clone https://github.com/xLLM-AI/xllm.git
 cd xllm
 
 ```

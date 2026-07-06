@@ -47,7 +47,7 @@ docker run -it \
 
 ### NVIDIA GPU
 
-我们提供了NVIDIA GPU使用的[Dockerfile](https://github.com/jd-opensource/xllm/blob/main/docker/Dockerfile.cuda)，可以构建自定义镜像，当然也可以使用我们根据默认Dockerfile构建的开发镜像：
+我们提供了NVIDIA GPU使用的[Dockerfile](https://github.com/xLLM-AI/xllm/blob/main/docker/Dockerfile.cuda)，可以构建自定义镜像，当然也可以使用我们根据默认Dockerfile构建的开发镜像：
 ```bash
 docker pull quay.io/jd_xllm/xllm-ai:xllm-dev-cuda-x86
 ```
@@ -148,7 +148,7 @@ docker run -it \
 
 下载xllm及依赖
 ```bash
-git clone https://github.com/jd-opensource/xllm
+git clone https://github.com/xLLM-AI/xllm.git
 cd xllm
 
 # 第一次需要进行pre-commit安装

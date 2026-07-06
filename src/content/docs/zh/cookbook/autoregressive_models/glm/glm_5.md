@@ -4,7 +4,7 @@ sidebar:
   order: 2
 ---
 
-+ 源码地址：https://github.com/jd-opensource/xllm
++ 源码地址：https://github.com/xLLM-AI/xllm
 
 + 国内可用: https://gitcode.com/xLLM-AI/xllm
 
@@ -58,7 +58,7 @@ sudo docker run -it --ipc=host -u 0 --privileged --name mydocker --network=host 
 下载官方仓库与模块依赖：
 
 ```bash
-git clone https://github.com/jd-opensource/xllm
+git clone https://github.com/xLLM-AI/xllm.git
 cd xllm
 git checkout release/v0.10.0
 git submodule update --init --recursive
@@ -330,15 +330,15 @@ msmodelslim quant \
 
 #### PD分离部署
 
-`xllm`支持PD分离部署，这需要与另一个开源库[xllm service](https://github.com/jd-opensource/xllm-service)配套使用。
+`xllm`支持PD分离部署，这需要与另一个开源库[xllm service](https://github.com/xLLM-AI/xllm-service)配套使用。
 
 ##### xLLM Service依赖
 
 首先，我们下载安装`xllm service`，与安装编译`xllm`类似：
 
 ```bash
-git clone https://github.com/jd-opensource/xllm-service
-cd xllm_service
+git clone https://github.com/xLLM-AI/xllm-service.git
+cd xllm-service
 git submodule init
 git submodule update
 ```

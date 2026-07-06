@@ -4,7 +4,7 @@ sidebar:
   order: 2
 ---
 
-- 源码地址：[https://github.com/jd-opensource/xllm](https://github.com/jd-opensource/xllm)
+- 源码地址：[https://github.com/xLLM-AI/xllm](https://github.com/xLLM-AI/xllm)
 - 国内可用: [https://gitcode.com/xLLM-AI/xllm](https://gitcode.com/xLLM-AI/xllm)
 - Kimi-K2.5 W8A8权重下载: [modelscope-Kimi-K2.5-W8A8-xLLM](https://www.modelscope.cn/models/Eco-Tech/Kimi-K2.5-W8A8-xLLM)
 - Kimi-K2.6 W8A8权重下载: [modelscope-Kimi-K2.6-w8a8-xllm](https://www.modelscope.cn/models/Eco-Tech/Kimi-K2.6-w8a8-xllm)
@@ -55,7 +55,7 @@ sudo docker run -it --ipc=host -u 0 --privileged --name xllm_kimi_k25 --network=
 下载官方仓库与模块依赖：
 
 ```bash
-git clone https://github.com/jd-opensource/xllm
+git clone https://github.com/xLLM-AI/xllm.git
 cd xllm
 git checkout main
 git submodule init

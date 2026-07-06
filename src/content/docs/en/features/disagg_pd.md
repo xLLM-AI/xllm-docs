@@ -20,7 +20,7 @@ The overall architecture is shown below:
 ### Preparation
 #### Install Dependencies
 - **xLLM**: Refer to [Installation && Compilation](/en/getting_started/quick_start/)
-- **xLLM Service**: Refer to [xLLM Service](https://github.com/jd-opensource/xllm-service)
+- **xLLM Service**: Refer to [xLLM Service](https://github.com/xLLM-AI/xllm-service)
 
 #### Obtain Environment Information  
 Deploying Disaggregated PD Service requires obtaining the Device IP of the machine to create communication resources. Execute the command `cat /etc/hccn.conf | grep address` on the current AI Server to get the Device IP, for example:

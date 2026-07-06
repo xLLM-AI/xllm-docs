@@ -7,9 +7,9 @@ sidebar:
 
 ## LLM
 
-LLM推理示例：[:simple-github: https://github.com/jd-opensource/xllm/blob/main/examples/generate.py](https://github.com/jd-opensource/xllm/blob/main/examples/generate.py)
+LLM推理示例：[:simple-github: https://github.com/xLLM-AI/xllm/blob/main/examples/generate.py](https://github.com/xLLM-AI/xllm/blob/main/examples/generate.py)
 
-LLM Beam Search 示例：[:simple-github: https://github.com/jd-opensource/xllm/blob/main/examples/generate_beam_search.py](https://github.com/jd-opensource/xllm/blob/main/examples/generate_beam_search.py)
+LLM Beam Search 示例：[:simple-github: https://github.com/xLLM-AI/xllm/blob/main/examples/generate_beam_search.py](https://github.com/xLLM-AI/xllm/blob/main/examples/generate_beam_search.py)
 
 使用 `BeamSearchParams` 设置大于 `1` 的 `beam_width`，然后调用 `llm.beam_search(...)`：
 
@@ -36,9 +36,9 @@ LLM Beam Search 使用 `beam_width` 作为开启参数。`top_logprobs` 控制�
 
 ## Embedding
 
-生成Embedding示例：[:simple-github: https://github.com/jd-opensource/xllm/blob/main/examples/generate_embedding.py](https://github.com/jd-opensource/xllm/blob/main/examples/generate_embedding.py)
+生成Embedding示例：[:simple-github: https://github.com/xLLM-AI/xllm/blob/main/examples/generate_embedding.py](https://github.com/xLLM-AI/xllm/blob/main/examples/generate_embedding.py)
 
 ## VLM
 
-VLM推理示例：[:simple-github: https://github.com/jd-opensource/xllm/blob/main/examples/generate_vlm.py](https://github.com/jd-opensource/xllm/blob/main/examples/generate_vlm.py)
+VLM推理示例：[:simple-github: https://github.com/xLLM-AI/xllm/blob/main/examples/generate_vlm.py](https://github.com/xLLM-AI/xllm/blob/main/examples/generate_vlm.py)
 

@@ -47,7 +47,7 @@ docker run -it \
 
 ### NVIDIA GPU
 
-We provide a [Dockerfile](https://github.com/jd-opensource/xllm/blob/main/docker/Dockerfile.cuda) for NVIDIA GPU usage, which can be used to build custom image. Of course, you can also use dev image we built based on the default Dockerfile:
+We provide a [Dockerfile](https://github.com/xLLM-AI/xllm/blob/main/docker/Dockerfile.cuda) for NVIDIA GPU usage, which can be used to build custom image. Of course, you can also use dev image we built based on the default Dockerfile:
 ```bash
 docker pull quay.io/jd_xllm/xllm-ai:xllm-dev-cuda-x86
 ```
@@ -148,7 +148,7 @@ If you download a release image, i.e., an image with a version number in the tag
 
 Download xllm and dependencies:
 ```bash
-git clone https://github.com/jd-opensource/xllm
+git clone https://github.com/xLLM-AI/xllm.git
 cd xllm
 
 # Install pre-commit for the first time

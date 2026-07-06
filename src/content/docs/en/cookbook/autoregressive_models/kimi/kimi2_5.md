@@ -4,7 +4,7 @@ sidebar:
   order: 2
 ---
 
-- Source code: [https://github.com/jd-opensource/xllm](https://github.com/jd-opensource/xllm)
+- Source code: [https://github.com/xLLM-AI/xllm](https://github.com/xLLM-AI/xllm)
 - Available in China: [https://gitcode.com/xLLM-AI/xllm](https://gitcode.com/xLLM-AI/xllm)
 - Kimi-K2.5 W8A8 weight download: [modelscope-Kimi-K2.5-W8A8-xLLM](https://www.modelscope.cn/models/Eco-Tech/Kimi-K2.5-W8A8-xLLM)
 - Kimi-K2.6 W8A8 weight download: [modelscope-Kimi-K2.6-w8a8-xllm](https://www.modelscope.cn/models/Eco-Tech/Kimi-K2.6-w8a8-xllm)
@@ -55,7 +55,7 @@ sudo docker run -it --ipc=host -u 0 --privileged --name xllm_kimi_k25 --network=
 Download the official repository and module dependencies:
 
 ```bash
-git clone https://github.com/jd-opensource/xllm
+git clone https://github.com/xLLM-AI/xllm.git
 cd xllm
 git checkout main
 git submodule init
