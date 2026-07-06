@@ -108,6 +108,10 @@ LOG_DIR="log"
 mkdir -p $LOG_DIR
 ```
 
+:::note
+Qwen3.5 does not currently support TP=16.
+:::
+
 ## Startup Command - Qwen3.5-27B (2 cards, TP=2, speculative decoding)
 
 ```bash

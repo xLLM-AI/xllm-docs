@@ -108,6 +108,10 @@ LOG_DIR="log"
 mkdir -p $LOG_DIR
 ```
 
+:::note
+Qwen3.5 目前不支持 TP=16 场景。
+:::
+
 ## 启动命令 - Qwen3.5-27B（2卡 TP=2，投机解码）
 
 ```bash
