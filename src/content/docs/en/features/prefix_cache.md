@@ -15,6 +15,18 @@ The prefix cache is implemented in xLLM and exposed through gflags parameters to
 --enable_prefix_cache=true
 ```
 
+## Cache-Aware DP Routing
+
+When running with data parallelism (`dp_size > 1`), requests can be routed to the DP rank that holds the longest prefix-cache hit, improving KV cache reuse across ranks.
+
+- Enable cache-aware DP routing:
+```
+--enable_prefix_cache=true --enable_prefix_cache_aware_dp_routing=true
+```
+
+- `prefix_cache_aware_dp_match_threshold` (default `0.5`): minimum prefix block hit ratio to prefer the cache-affinity rank. Below this threshold, routing falls back to free-block balancing.
+- `prefix_cache_aware_dp_imbalance_threshold` (default `0.1`): maximum cross-rank KV utilization gap (`(max_used-min_used)/total_blocks`). Exceeding this disables affinity routing and selects the least-loaded rank.
+
 ## Performance Impact
 After enabling prefix cache, on the Qwen3-8B model with a TPOT constraint of 50ms, the E2E latency **decreased by 10%**.
 
