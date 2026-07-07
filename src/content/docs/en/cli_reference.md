@@ -66,6 +66,9 @@ xLLM uses gflags to manage service startup parameters. `--model <PATH>` is the o
 | `max_memory_utilization` | `double` | `0.8` | Fraction of GPU memory used for model inference, including model weights and KV Cache. |
 | `kv_cache_dtype` | `string` | `"auto"` | KV Cache dtype for quantization. `auto` aligns with model dtype and disables quantization. `int8` enables INT8 quantization and is only supported on the MLU backend. |
 | `enable_prefix_cache` | `bool` | `true` | Whether to enable prefix cache in the block manager. See [Prefix Cache](/en/features/prefix_cache/). |
+| `enable_prefix_cache_aware_dp_routing` | `bool` | `false` | Whether to enable prefix-cache-aware DP rank routing. Requires `enable_prefix_cache=true` and `dp_size>1`. |
+| `prefix_cache_aware_dp_match_threshold` | `double` | `0.5` | Minimum prefix block hit ratio for cache-aware DP affinity routing. Below this threshold, routing falls back to free-block balancing. |
+| `prefix_cache_aware_dp_imbalance_threshold` | `double` | `0.1` | Maximum cross-rank KV utilization gap before cache-aware affinity routing is disabled. Computed as `(max_used-min_used)/total_blocks`. |
 | `xxh3_128bits_seed` | `uint32` | `1024` | Default XXH3 128-bit hash seed. |
 | `enable_xtensor` | `bool` | `false` | Whether to enable XTensor for model weights with the physical page pool. |
 | `phy_page_granularity_size` | `int64` | `2097152` | Granularity size of one physical page in bytes, default 2 MiB, for continuous KV Cache. |
