@@ -153,6 +153,11 @@ export default defineConfig({
 									collapsed: true,
 									items: [
 										{
+											label: 'DeepSeek-V4',
+											translations: { 'zh-CN': 'DeepSeek-V4' },
+											slug: 'cookbook/autoregressive_models/deepseek/deepseek_v4',
+										},
+										{
 											label: 'DeepSeek-V3.2',
 											translations: { 'zh-CN': 'DeepSeek-V3.2' },
 											slug: 'cookbook/autoregressive_models/deepseek/deepseek_v3_2',
