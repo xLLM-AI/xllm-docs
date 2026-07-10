@@ -93,6 +93,11 @@ export default defineConfig({
 							translations: { 'zh-CN': '沐曦 MACA' },
 							slug: 'hardware/metax_maca',
 						},
+						{
+							label: 'Mthreads MUSA',
+							translations: { 'zh-CN': '摩尔线程 MUSA' },
+							slug: 'hardware/musa',
+						},
 					],
 				},
 				{

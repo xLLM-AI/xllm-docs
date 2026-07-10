@@ -142,6 +142,35 @@ docker run -it \
 /bin/bash
 ```
 
+### 摩尔线程 MUSA
+
+镜像拉取命令：
+
+```bash
+docker pull registry.mthreads.com/presale/devtech/xllm:0710
+```
+
+容器启动命令：
+
+```bash
+docker run -it \
+  --ipc=host \
+  --network=host \
+  --privileged \
+  --shm-size=128g \
+  --name xllm-musa \
+  --device=/dev/mtgpu0 \
+  --device=/dev/dri \
+  --group-add video \
+  --ulimit memlock=-1 \
+  -v $HOME:$HOME \
+  -w $HOME \
+  registry.mthreads.com/presale/devtech/xllm:0710 \
+  /bin/bash
+```
+
+更多细节见 [摩尔线程 MUSA](/zh/hardware/musa/)。
+
 ## 编译xllm
 
 如果下载的是release镜像，即tag中带有版本号的镜像，可以跳过此步，因为release镜像自带编译好的xllm二进制文件，可以直接调用`xllm`。

@@ -142,6 +142,35 @@ docker run -it \
 /bin/bash
 ```
 
+### Mthreads MUSA
+
+Image pull:
+
+```bash
+docker pull registry.mthreads.com/presale/devtech/xllm:0710
+```
+
+Container startup:
+
+```bash
+docker run -it \
+  --ipc=host \
+  --network=host \
+  --privileged \
+  --shm-size=128g \
+  --name xllm-musa \
+  --device=/dev/mtgpu0 \
+  --device=/dev/dri \
+  --group-add video \
+  --ulimit memlock=-1 \
+  -v $HOME:$HOME \
+  -w $HOME \
+  registry.mthreads.com/presale/devtech/xllm:0710 \
+  /bin/bash
+```
+
+See [Mthreads MUSA](/en/hardware/musa/) for full details.
+
 ## Build xllm
 
 If you download a release image, i.e., an image with a version number in the tag, you can skip this step because the release image comes with a pre-compiled xllm binary, and call `xllm` directly.

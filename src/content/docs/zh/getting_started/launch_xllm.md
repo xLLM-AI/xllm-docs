@@ -199,3 +199,45 @@ do
     --node_rank=$i \ > $LOG_FILE 2>&1 &
 done
 ```
+
+## 摩尔线程 MUSA
+
+```bash
+#!/bin/bash
+set -e
+
+rm -rf core.*
+
+export MUSA_VISIBLE_DEVICES=0
+
+MODEL_PATH="/path/to/model/Qwen3.5-27B"
+MASTER_NODE_ADDR="127.0.0.1:9748"
+START_PORT=18000
+START_DEVICE=0
+LOG_DIR="log"
+NNODES=1
+
+mkdir -p $LOG_DIR
+
+for (( i=0; i<$NNODES; i++ ))
+do
+  PORT=$((START_PORT + i))
+  DEVICE=$((START_DEVICE + i))
+  LOG_FILE="$LOG_DIR/node_$i.log"
+  xllm \
+    --model $MODEL_PATH \
+    --devices="musa:$DEVICE" \
+    --port $PORT \
+    --master_node_addr=$MASTER_NODE_ADDR \
+    --nnodes=$NNODES \
+    --block_size=64 \
+    --max_memory_utilization=0.8 \
+    --enable_prefix_cache=false \
+    --enable_chunked_prefill=true \
+    --enable_schedule_overlap=true \
+    --enable_graph=true \
+    --node_rank=$i \ > $LOG_FILE 2>&1 &
+done
+```
+
+详见 [摩尔线程 MUSA](/zh/hardware/musa/)。
