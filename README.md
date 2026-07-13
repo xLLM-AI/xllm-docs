@@ -1,3 +1,7 @@
+# WARNING!!!
+
+This repository is no longer maintained. Please refer to the [xLLM](https://github.com/xLLM-AI/xllm) repository for the latest documentation.
+
 # xLLM Documentation
 
 [English](./README.md) | [简体中文](./README.zh-CN.md)
